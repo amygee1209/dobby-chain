@@ -1,0 +1,29 @@
+#main {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+#main img {
+  width: 50vw;
+}
+#main h1 {
+  font-size: 6vh;
+  font-weight: 600;
+}
+#main h3 {
+  font-size: 3vh;
+  font-weight: 400;
+}
+#main .abtus-btn {
+  width: 120px;
+  background-color: coral;
+  border-radius: 10px;
+  padding: 1vh;
+  font-size: 3vh;
+  transition: all .2s ease-in-out;
+}
+#main .abtus-btn:hover {
+  transform: scale(1.1);
+  background-color: darkgoldenrod;
+}

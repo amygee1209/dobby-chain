@@ -1,0 +1,77 @@
+.ranking-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.top3-ranking {
+  border-radius: 20px;
+  width: 31%;
+  margin: 15px 0;
+  padding: 5px 15px 15px;
+  margin-top: 5vh;
+  transition: all .2s ease-in-out;
+  position: relative;
+}
+.top1{
+  background-color: rgb(255,215,0);
+}
+.top2{
+  background-color: rgb(211,211,211);
+}
+.top3{
+  background-color: #c36b29;
+}
+.top3-ranking:hover{
+  transform: scale(1.1);
+  cursor: pointer;
+}
+.top3-ranking .crown-img {
+  position: absolute;
+  top: -10%;
+  width: 8vw;
+}
+.top3-ranking .profile-img {
+  border-radius: 50%;
+  width: 8vw;
+  height: 8vw;
+  object-fit: cover;
+  margin: 3vh 0;
+}
+.top3-ranking h5{
+  font-size: 3vh;
+  font-weight: 500;
+  margin: 1vh 0;
+}
+.top3-ranking p{
+  font-size: 2.3vh;
+  margin: 1vh 0;
+}
+
+.rest-ranking {
+  border-radius: 20px;
+  width: 18%;
+  background-color: rgb(193, 233, 196);
+  margin: 2vh 1%;
+  padding: 5px 10px 10px;
+  margin-top: 5vh;
+  transition: all .2s ease-in-out;
+  line-height: 2;
+}
+.rest-ranking:hover{
+  transform: scale(1.1);
+  cursor: pointer;
+}
+.rest-ranking img {
+  border-radius: 50%;
+  width: 4vw;
+  height: 4vw;
+  object-fit: cover;
+  margin: 2vh 0;
+}
+.rest-ranking h5{
+  font-size: 2.2vh;
+  font-weight: 500;
+}
+.rest-ranking p{
+  font-size: 2vh;
+}

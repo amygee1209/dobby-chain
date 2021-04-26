@@ -1,0 +1,17 @@
+.profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.profile img{
+  border-radius: 50%;
+  width: 35vh;
+  height: 35vh;
+  object-fit: cover;
+  margin: 5vh 8vw 0 0;
+}
+.profile .info{
+  display: flex;
+  flex-direction: column;
+}
