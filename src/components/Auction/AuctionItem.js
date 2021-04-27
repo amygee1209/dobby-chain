@@ -56,7 +56,7 @@ export default function AuctionItem({address, item}) {
     console.log("fetching item info...")
     //console.log(item.aid)
     const res = await axios
-      .get(`https://dobchain-testing.herokuapp.com/auction?getAll=false&aid=${item.aid}`)
+      .get(`https://dobchain-testing.herokuapp.com/auction?aid=${item.aid}`)
       .catch(err => {
         console.log("Error:", err)
       })

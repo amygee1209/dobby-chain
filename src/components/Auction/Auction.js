@@ -13,7 +13,7 @@ export default function Auction({domain, address, onboardState}) {
   const fetchAllAuctions = async () => {
     console.log("fetching all...")
     const res = await axios
-      .get(`https://dobchain-testing.herokuapp.com/auction?getAll=true`)
+      .get(`https://dobchain-testing.herokuapp.com/auctions`)
       .catch(err => {
         console.log("Error:", err)
       })
