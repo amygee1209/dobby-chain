@@ -13,7 +13,8 @@ import {
   InputGroup,
   InputLeftAddon,
   Input,
-  Stack
+  Stack,
+  CircularProgress
 } from "@chakra-ui/react"
 import { CheckIcon } from '@chakra-ui/icons'
 import './AuctionItem.css';
@@ -31,6 +32,7 @@ export default function AuctionItem({address, item}) {
   const [highestBid, setHighestBid] = useState(0);
   const [highestBidder, setHighestBidder] = useState('');
   const [myBid, setMyBid] = useState(0);
+  const [bidStatus, setBidStatus] = useState(false);
   
   //design
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -111,6 +113,7 @@ export default function AuctionItem({address, item}) {
       })
     });
     console.log("my bid: ", myBid);
+    return true;
   }
 
   async function getHighest() {
@@ -127,11 +130,16 @@ export default function AuctionItem({address, item}) {
     if (inputBid <= 0) {
       toastIdRef.current = toast({ description: "너같으면 마이너스 배팅이 되겠냐? ㅡ.ㅡ" })
     } else {
-      setTimeout(() => {
-        makeBid(inputBid);
-      }, 5000);
-      toastIdRef.current = toast({ description: "짝짝짝! 성공적으로 배팅하셨습니다!" })
-      setInputBid('')
+      setBidStatus(true)
+      makeBid(inputBid)
+      .then(status => {
+        console.log(status)
+        if (status) {
+          toastIdRef.current = toast({ description: "짝짝짝! 성공적으로 배팅하셨습니다!" })
+          setInputBid('')
+          setBidStatus(false)
+        }}
+      )
     }
   }
 
@@ -168,15 +176,19 @@ export default function AuctionItem({address, item}) {
                     style={{fontSize: "3vh"}}
                   />
                 </InputGroup>
-                <Button 
-                  onClick={handleSubmit}
-                  rightIcon={<CheckIcon />} 
-                  colorScheme="blue" 
-                  variant="outline"
-                  className="btn"
-                >
-                  Bid
-                </Button>
+                {bidStatus?
+                  <CircularProgress isIndeterminate color="blue.300" />
+                  :
+                  <Button 
+                    onClick={handleSubmit}
+                    rightIcon={<CheckIcon />} 
+                    colorScheme="blue" 
+                    variant="outline"
+                    className="btn"
+                  >
+                    Bid
+                  </Button>
+                }
             </Stack>
           </ModalBody>
 

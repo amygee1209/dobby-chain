@@ -2,9 +2,7 @@ import './Officer.css';
 import kseaToken from '../ethereum/KSEA_Token';
 import kseAirdrop from '../ethereum/KSEAirdrop';
 import auctionFactory from '../ethereum/AuctionFactory';
-import KSEA_Token from "../../abis/KSEAToken.json";
 import React, { useEffect, useState} from 'react';
-import web3 from "../ethereum/Web3";
 
 //redux imports
 import { useDispatch, useSelector } from 'react-redux';
@@ -217,9 +215,7 @@ export default function Officer({address, onboardState}) {
 
   async function handleAuction(event) {
     event.preventDefault();
-    const networkId = await web3.eth.net.getId();
-    const networkData1 = KSEA_Token.networks[networkId]
-    await createAuction(auctionName, networkData1.address)
+    await createAuction(auctionName, "0x692B98Fa3971Eed67d66DFB41B662667627A310a")
     // console.log(listOfAuctions);
   }
 
@@ -235,11 +231,11 @@ export default function Officer({address, onboardState}) {
         .then(res => { 
           console.log(res.data.status)
           toastIdRef.current = toast({ description: `Auction ${name} created`})
+          setAuctionImg('');
+          setAuctionName('');
+          setAuctionDuration('');
         })
     });
-    setAuctionImg('');
-    setAuctionName('');
-    setAuctionDuration('');
   }
 
   return airdrop && token? (
