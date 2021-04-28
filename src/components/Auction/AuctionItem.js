@@ -18,16 +18,16 @@ import {
 } from "@chakra-ui/react"
 import { CheckIcon } from '@chakra-ui/icons'
 import './AuctionItem.css';
-import Timer from './Timer';
+//import Timer from './Timer';
 import axios from 'axios';
 
 import web3 from "../ethereum/Web3";
 import KSEA_Auction from "../../abis/KSEAuction.json";
 import KseaToken from "../ethereum/KSEA_Token";
-import { useSelector } from 'react-redux';
+//import { useSelector } from 'react-redux';
 
 export default function AuctionItem({address, item, exist}) {
-  const user = useSelector((state) => state.allUsers.selUser)
+  //const user = useSelector((state) => state.allUsers.selUser)
   const [inputBid, setInputBid] = useState('');
   const [highestBid, setHighestBid] = useState(0);
   const [highestBidder, setHighestBidder] = useState('');
@@ -109,7 +109,7 @@ export default function AuctionItem({address, item, exist}) {
   async function makeBid(_amount) {
     await token.methods.approve(item.contractAddr, _amount).send({from:address});
     await auction.methods.bid(_amount).send({from:address})
-    let getMyBid = await auction.methods.getBid(address).call();
+    //let getMyBid = await auction.methods.getBid(address).call();
     await getHighest().then(highest => {
       
       //Update highest bid and bidder

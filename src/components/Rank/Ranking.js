@@ -31,7 +31,7 @@ export default function Ranking({address, onboardState}) {
       const ranking = sorted.map(person => {
         const rankIndex = sorted.findIndex(p => person.uid === p.uid)+1
         //console.log(person.address, rankIndex)
-        if (person.address == address) {
+        if (person.address === address) {
           setMyRank(rankIndex)
         }
         return ({...person, rank: rankIndex})

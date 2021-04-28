@@ -8,7 +8,7 @@ import {
 
 //redux imports
 import { selectedUser } from './redux/actions/userActions'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import axios from 'axios';
 
 //Import components
@@ -27,8 +27,6 @@ import initOnboard from './utils/initOnboard';
 import Web3 from 'web3'
 
 export default function App() {
-  //deployment
-  //const domain = 'https://localhost:5000';
   //const domain = 'https://dobchain-testing.herokuapp.com';
   
   //blockchain related
@@ -72,7 +70,7 @@ export default function App() {
   }, [address, onboard]);
 
   //redux
-  const user = useSelector((state) => state.allUsers.selUser)
+  //const user = useSelector((state) => state.allUsers.selUser)
   const dispatch = useDispatch()
 
   const fetchUser = async () => {

@@ -4,10 +4,6 @@ import kseAirdrop from '../ethereum/KSEAirdrop';
 import auctionFactory from '../ethereum/AuctionFactory';
 import React, { useEffect, useState} from 'react';
 
-//redux imports
-import { useDispatch, useSelector } from 'react-redux';
-import { setAuctionList } from '../../redux/actions/userActions';
-
 import axios from 'axios';
 import {
   Button, 
@@ -20,7 +16,7 @@ import {
   AccordionButton,
   AccordionPanel,
   AccordionIcon
-} from "@chakra-ui/react"
+} from "@chakra-ui/react";
 
 //Import officer components
 import ManageAuction from './ManageAuction';
@@ -31,9 +27,6 @@ export default function Officer({address, onboardState}) {
   //design
   const toast = useToast()
   const toastIdRef = React.useRef()
-
-  const dispatch = useDispatch()
-  const user = useSelector((state) => state.allUsers.selUser)
 
   // Event id
   const [eventId, setEventId] = useState('');
@@ -48,8 +41,7 @@ export default function Officer({address, onboardState}) {
   const [token, setToken] = useState(undefined);
   const [factory, setFactory] = useState(undefined);
   const [boardValue, setBoardValue] = useState('');
-  const [listOfAuctions, setListOfAuctions] = useState([]);
-
+ 
   //input token/ether
   const [inputToken, setInputToken] = useState('');
   const [inputEther, setInputEther] = useState('');
@@ -71,17 +63,6 @@ export default function Officer({address, onboardState}) {
     }
     fetchData();
   }, []);
-
-  useEffect(() => {
-    let list = JSON.parse(localStorage.getItem('listOfAuction', listOfAuctions));  
-    setListOfAuctions(list); 
-  }, [])
-
-  useEffect(() => {
-    console.log("list of auctions: " + listOfAuctions);
-    localStorage.setItem('listOfAuction', JSON.stringify(listOfAuctions));   
-    dispatch(setAuctionList(listOfAuctions))
-  }, [listOfAuctions])
 
 
   //KSEAirdrop button handlers. These functions will get called when buttons are clicked
@@ -153,7 +134,7 @@ export default function Officer({address, onboardState}) {
     const {name, value} = event.target
     if (name === "inputToken") {
       setInputToken(value)
-    } else if (name == "eventId") {
+    } else if (name === "eventId") {
       setEventId(value)
     } else {
       setInputEther(value)
@@ -221,8 +202,7 @@ export default function Officer({address, onboardState}) {
 
   async function handleAuction(event) {
     event.preventDefault();
-    await createAuction(auctionName, "0x692B98Fa3971Eed67d66DFB41B662667627A310a")
-    // console.log(listOfAuctions);
+    await createAuction(auctionName, "0x692B98Fa3971Eed67d66DFB41B662667627A310a");
   }
 
   async function createAuction(name, tokenAddr) {
