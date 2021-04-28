@@ -1,4 +1,5 @@
 import './Footer.css';
+import { Link } from 'react-router-dom';
 
 //import imgs
 import bottom from './../../img/bottom.png';
@@ -19,6 +20,11 @@ export default function Footer() {
           <img src={igLogo} alt="ig logo"/>
         </a>
       </div>
+      <Link to="/about-us">
+        <button type="button" className="abtus-btn">
+          About Us
+        </button>
+      </Link>
       <h1>Created & Designed by</h1>
       <div className="logo ksea-logo">
         <img src={kseaLogo} alt="ksea logo"/>

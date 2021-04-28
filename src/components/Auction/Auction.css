@@ -1,5 +1,11 @@
+#auction {
+  margin-top: 10vh;
+}
+.auction-notify p {
+  text-align: right;
+}
 .auction-content {
-  margin-top: 15vh;
+  margin-top: 5vh;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

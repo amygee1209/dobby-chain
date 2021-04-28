@@ -7,12 +7,14 @@
 venv
 
 #abis
-# /src/abis/AuctionFactory.json
-# /src/abis/KSEAirdrop.json
-# /src/abis/KSEAToken.json
-# /src/abis/KSEAuction.json
+/src/abis/AuctionFactory.json
+/src/abis/KSEAirdrop.json
+/src/abis/KSEAToken.json
+/src/abis/KSEAuction.json
 
-# /Smart_Contracts/KSEAuction/build/contracts
+# deploy
+/Smart_Contracts
+README.md
 
 # testing
 /coverage

@@ -10,20 +10,13 @@
   text-align: center;
   position: relative;
 }
-.auction-item-overlay {
-  position: absolute;
-  border-radius: 9px;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  opacity: 0;
-  height: 100%;
-  width: 100%;
-  transition: 0.3s;
-  background-color: rgb(135, 135, 248);
+.bidded-item-false {
+  background-color: rgb(255, 255, 255);
 }
-.auction-item:hover{
+.bidded-item-true {
+  background-color: rgb(194, 253, 146);
+}
+.auction-item:hover {
   opacity: 0.7;
   cursor: pointer;
 }
@@ -48,8 +41,12 @@
   word-wrap: break-word;
 }
 .contractAddr-img {
+  margin: auto;
   display: inline-block;
-  width: 40vh;
-  height: 40vh;
+  width: 35vh;
+  height: 35vh;
   object-fit: contain;
+}
+.auction-item-box {
+  padding: 2vh 3vh 0;
 }

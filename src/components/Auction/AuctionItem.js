@@ -26,12 +26,12 @@ import KSEA_Auction from "../../abis/KSEAuction.json";
 import KseaToken from "../ethereum/KSEA_Token";
 import { useSelector } from 'react-redux';
 
-export default function AuctionItem({address, item}) {
+export default function AuctionItem({address, item, exist}) {
   const user = useSelector((state) => state.allUsers.selUser)
   const [inputBid, setInputBid] = useState('');
   const [highestBid, setHighestBid] = useState(0);
   const [highestBidder, setHighestBidder] = useState('');
-  const [myBid, setMyBid] = useState(0);
+  const [myBid, setMyBid] = useState('');
   const [bidStatus, setBidStatus] = useState(false);
   
   //design
@@ -67,13 +67,23 @@ export default function AuctionItem({address, item}) {
       console.log(res.data)
       setHighestBid(res.data.highestBid)
       setHighestBidder(res.data.highestBidder)
-      setMyBid(res.data.myBid)
     }
+
+    console.log("fetching my bid...")
+    //console.log(item.aid)
+    axios.get(`https://dobchain-testing.herokuapp.com/auctionbid?aid=${item.aid}&address=${address}`)
+      .then(res => {
+        console.log(res.data)
+        setMyBid(res.data.myBid)
+      })
+      .catch(err => {
+        console.log("Error:", err)
+      })
   }
 
   useEffect(() => {
     fetchItemInfo();
-  }, [item])
+  }, [item, highestBid, highestBidder])
 
 
   useEffect(() => {
@@ -101,15 +111,26 @@ export default function AuctionItem({address, item}) {
     await auction.methods.bid(_amount).send({from:address})
     let getMyBid = await auction.methods.getBid(address).call();
     await getHighest().then(highest => {
+      
+      //Update highest bid and bidder
       console.log(highest[0], highest[1])
-      let formData = new FormData();
-      formData.append('aid', item.aid); 
-      formData.append('highestBid', highest[0]); 
-      formData.append('highestBidder', highest[1]);
-      formData.append('myBid', getMyBid);
-      axios.put(`https://dobchain-testing.herokuapp.com/auction`, formData)
+      let highestForm = new FormData();
+      highestForm.append('aid', item.aid); 
+      highestForm.append('highestBid', highest[0]); 
+      highestForm.append('highestBidder', highest[1]);
+      axios.put(`https://dobchain-testing.herokuapp.com/auction`, highestForm)
       .then(res => {
         console.log(res.data.highestBidder)
+      })
+
+      //Update my bid of the auction item
+      let inputBidForm = new FormData();
+      inputBidForm.append('aid', item.aid); 
+      inputBidForm.append('inputBid', inputBid);
+      inputBidForm.append('address', address);
+      axios.post(`https://dobchain-testing.herokuapp.com/auctionbid`, inputBidForm)
+      .then(res => {
+        console.log(res.data.status)
       })
     });
     console.log("my bid: ", myBid);
@@ -122,10 +143,10 @@ export default function AuctionItem({address, item}) {
     return [highestBid, highestBidder];
   }
 
-
   function handleChange(e) {
     setInputBid(e.target.value)
   }
+
   function handleSubmit() {
     if (inputBid <= 0) {
       toastIdRef.current = toast({ description: "너같으면 마이너스 배팅이 되겠냐? ㅡ.ㅡ" })
@@ -143,18 +164,17 @@ export default function AuctionItem({address, item}) {
     }
   }
 
-
+  const designClass = `auction-item bidded-item-${exist}`
 
   return (
-    <div onClick={onOpen} className="auction-item">
-      <div className="auction-contractAddr-overlay"></div>
+    <div onClick={onOpen} className={designClass}>
 
       <img src={item.img} className="auction-item-img" alt="item img"/>
       <h1>{item.name}</h1>
 
-      <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
+      <Modal closeOnOverlayClick={false} size="xl" isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent className="auction-item-box">
           <ModalHeader>{item.name}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
@@ -162,6 +182,7 @@ export default function AuctionItem({address, item}) {
               <img src={item.img} className="contractAddr-img" alt="item img"/>
               <h2>Auction Address:</h2>
               <h2>{item.contractAddr}</h2>
+              <h2>Auction Id: {item.aid}</h2>
               <h2>Highest Bid: {highestBid} token(s)</h2>
               <h2>Highest Bidder: {highestBidder} </h2>
               <h2>My Bid: {myBid} token(s)</h2>

@@ -13,12 +13,18 @@ import {
   Button, 
   Input,
   Stack,
-  useToast
+  useToast,
+  Box,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon
 } from "@chakra-ui/react"
 
 //Import officer components
-import CreateAuction from './CreateAuction';
-import CreateCheckin from './CreateCheckin';
+import ManageAuction from './ManageAuction';
+import ManageCheckin from './ManageCheckin';
 import ManageMember from './ManageMember';
 
 export default function Officer({address, onboardState}) {
@@ -244,24 +250,46 @@ export default function Officer({address, onboardState}) {
         <h2>Please Connect Your Wallet</h2>
         :
         <div>
-          {/* {bool ? */}
-            <Stack spacing={10} id='officer'>
-              <Stack spacing={5} className="create-new">
+        <Accordion allowMultiple id='officer'>
+          <AccordionItem>
+            <AccordionButton>
+              <Box flex="1" textAlign="left">
                 <h1>Officer Management</h1>
-                <div>
-                  <Input onChange={handleBoardChange} placeholder="medium size" size="md" />
-                  <Button onClick={handleRegister} colorScheme="blue">Register Officer</Button>
-                </div>
-
-                <div>
-                  <Input onChange={handleBoardChange} placeholder="medium size" size="md" />
-                  <Button onClick={handleDeregister} colorScheme="blue">
-                    Deregister Officer</Button>
-                </div>
-              </Stack>
-
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
               <Stack spacing={5} className="create-new">
+                <h2>Register</h2>
+                <Input 
+                  onChange={handleBoardChange} 
+                  placeholder="officer metamask address"
+                />
+                <Button onClick={handleRegister} colorScheme="green">
+                  Register Officer
+                </Button>
+
+                <h2>Deregister</h2>
+                <Input 
+                  onChange={handleBoardChange} 
+                  placeholder="officer metamask address"
+                />
+                <Button onClick={handleDeregister} colorScheme="red">
+                  Deregister Officer
+                </Button>
+              </Stack>
+            </AccordionPanel>
+          </AccordionItem>
+
+          <AccordionItem>
+            <AccordionButton>
+              <Box flex="1" textAlign="left">
                 <h1>Distribute Dobby</h1>
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Stack spacing={5} className="create-new">
                 <Input
                   name="eventId"
                   type="number"
@@ -269,8 +297,14 @@ export default function Officer({address, onboardState}) {
                   onChange={handleDistributeChange} 
                   placeholder="event Id"
                 />
-                <Button onClick={handleViewCheckedinMembers} colorScheme="blue">View members</Button>
-                <div>List of members: {viewListofMembers}</div>
+                <Button onClick={handleViewCheckedinMembers} colorScheme="green">
+                  View members
+                </Button>
+                {viewListofMembers.length > 0?
+                  <div>List of members: {viewListofMembers}</div>
+                  :
+                  <div>List of members: none</div>
+                }
                 <Input
                   name="inputToken"
                   type="number"
@@ -278,11 +312,22 @@ export default function Officer({address, onboardState}) {
                   onChange={handleDistributeChange} 
                   placeholder="token amount"
                 />
-                <Button onClick={handleDistributeToken} colorScheme="blue">Distribute Dobby</Button>
+                <Button onClick={handleDistributeToken} colorScheme="blue">
+                  Distribute Dobby
+                </Button>
               </Stack>
+            </AccordionPanel>
+          </AccordionItem>
 
-              <Stack spacing={5} className="create-new">
+          <AccordionItem>
+            <AccordionButton>
+              <Box flex="1" textAlign="left">
                 <h1>Distribute Ether</h1>
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <Stack spacing={5} className="create-new">
                 <Input
                   name="inputEther"
                   type="number"
@@ -290,22 +335,56 @@ export default function Officer({address, onboardState}) {
                   onChange={handleDistributeChange} 
                   placeholder="Ether amount"
                 />
-                <Button onClick={handleDistributeEther} colorScheme="blue">Distribute Ether</Button>
+                <Button onClick={handleDistributeEther} colorScheme="blue">
+                  Distribute Ether
+                </Button>
               </Stack>
+              </AccordionPanel>
+          </AccordionItem>
 
-              <CreateAuction
+          <AccordionItem>
+            <AccordionButton>
+              <Box flex="1" textAlign="left">
+                <h1>Auction</h1>
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <ManageAuction
                 auctionName = {auctionName}
                 auctionImg = {auctionImg}
                 auctionDuration = {auctionDuration}
                 handleAuction = {handleAuction}
                 handleAuctionChange = {handleAuctionChange}
               />
+            </AccordionPanel>
+          </AccordionItem>
 
-              <CreateCheckin />
+          <AccordionItem>
+            <AccordionButton>
+              <Box flex="1" textAlign="left">
+                <h1>Checkin Event</h1>
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
+              <ManageCheckin />
+            </AccordionPanel>
+          </AccordionItem>
 
+          <AccordionItem>
+            <AccordionButton>
+              <Box flex="1" textAlign="left">
+                <h1>Member Management</h1>
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+            <AccordionPanel pb={4}>
               <ManageMember />
+            </AccordionPanel>
+          </AccordionItem>
 
-            </Stack>
+        </Accordion>
           {/* //   :
           //   <div>You Are Not An Officer</div>
           // } */}

@@ -5,16 +5,18 @@
   transition: all .2s ease-in-out;
 }
 #ranking .my-ranking {
+  margin: auto;
+  width: 60%;
   margin-bottom: 4vh;
 }
 #ranking .my-ranking-box {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   background-color: rgb(189, 240, 241);
   border-radius: 30px;
-  padding: 2vh;
+  padding: 2vh 5vh;
   margin: 2vh 0 10vh;
 }
 #ranking h2{

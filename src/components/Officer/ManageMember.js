@@ -36,7 +36,13 @@ export default function ManageMember() {
     ).then(res => {
       console.log(res.data)
       if (res.data.success) {
-        toastIdRef.current = toast({ description: `Member ${name} added` })
+        toastIdRef.current = toast({
+          title: "Member created.",
+          description: `${name} created successfully.`,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        })
         setName('');
         setEmail('');
         setImg('');
@@ -77,7 +83,7 @@ export default function ManageMember() {
       
   return (
     <Stack spacing={5} className="create-new">
-      <h1>Add new member</h1>
+      <h2>Add new member</h2>
       <Input
         name="name"
         value={name}
@@ -108,17 +114,17 @@ export default function ManageMember() {
         onChange={handleChange} 
         placeholder="metamask address"
       />
-      <Button onClick={handleAddMember} colorScheme="blue">
+      <Button onClick={handleAddMember} colorScheme="green">
         Add Member
       </Button>
-      <h1>Delete Member</h1>
+      <h2>Delete Member</h2>
       <Input
         name="deleteMemAddr"
         value={deleteMemAddr}
         onChange={handleChange} 
         placeholder="metamask address"
       />
-      <Button onClick={handleDeleteMember} colorScheme="blue">
+      <Button onClick={handleDeleteMember} colorScheme="red">
         Delete Member
       </Button>
     </Stack>

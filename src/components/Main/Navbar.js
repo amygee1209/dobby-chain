@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { Button } from "@chakra-ui/react";
 import { 
   HamburgerIcon, 
-  CloseIcon } from '@chakra-ui/icons';
+  CloseIcon 
+} from '@chakra-ui/icons';
 
 export default function Navbar({onboard, onboardState}) {
   let address = onboardState.address;
