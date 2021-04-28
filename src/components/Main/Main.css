@@ -3,6 +3,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20vh;
 }
 #main img {
   width: 50vw;
@@ -26,4 +27,8 @@
 #main .abtus-btn:hover {
   transform: scale(1.1);
   background-color: darkgoldenrod;
+}
+.main-video {
+  padding-top: 20vh;
+  margin: auto;
 }

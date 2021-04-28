@@ -1,13 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
-import { Button } from "@chakra-ui/react";
+import { 
+  Button,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverArrow,
+  PopoverCloseButton
+ } from "@chakra-ui/react";
 import { 
   HamburgerIcon, 
   CloseIcon 
 } from '@chakra-ui/icons';
+import axios from 'axios';
 
 export default function Navbar({onboard, onboardState}) {
+  const [user, setUser] = useState({});
   let address = onboardState.address;
 
   async function readyToTransact() {
@@ -24,15 +35,41 @@ export default function Navbar({onboard, onboardState}) {
     <Button onClick={() => readyToTransact()} colorScheme="teal" variant="outline">
       Connect Wallet
     </Button>
-    : 
-    <Button colorScheme="teal" variant="outline">
-      {`${address?.substr(0, 6)}...${address?.substr(address.length - 4)}`}
-    </Button>
+    :
+    <Popover>
+      <PopoverTrigger>
+        <Button colorScheme="teal" variant="outline">
+          {user.name}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent>
+        <PopoverArrow />
+        <PopoverCloseButton />
+        <PopoverHeader>Need Help?</PopoverHeader>
+        <PopoverBody>
+          <a href="https://metamask.io/" className="tutorial-link">
+            Try this tutorial!
+          </a>
+        </PopoverBody>
+      </PopoverContent>
+    </Popover>
+    
 
   const [menuClick, setmenuClick] = useState(false);
 
   const handleClick = () => setmenuClick(!menuClick);
   const closeMenu = () => setmenuClick(false);
+
+  useEffect(() => {
+    axios.get(`https://dobchain-testing.herokuapp.com/member?address=${address}`)
+      .then(res => {
+        console.log(res.data);
+        setUser(res.data)
+      })
+      .catch((err) => {
+        console.log("Error:", err);
+      })
+  }, [onboard, onboardState])
 
   return (
     <div>
@@ -62,7 +99,9 @@ export default function Navbar({onboard, onboardState}) {
             <li className='nav-item'>
               <Link to="/profile" onClick={closeMenu} className='nav-links'>Profile</Link>
             </li>
-            <li className="wallet-btn">{walletBtn}</li>
+            <li className="wallet-btn">
+              {walletBtn}
+            </li>
             </ul>
         </nav> 
       </div>

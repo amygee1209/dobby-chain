@@ -2,14 +2,20 @@ import React, {useState, useEffect} from 'react';
 import './Auction.css';
 import AuctionItem from './AuctionItem';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { CircularProgress} from "@chakra-ui/react"
+import { CircularProgress} from "@chakra-ui/react";
+import Timer from './Timer';
+import AuctionTimer from './AuctionTimer';
 
 export default function Auction({address, onboardState}) {
-  const user = useSelector((state) => state.allUsers.selUser)
   const [auctions, setAuctions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [myAuctionBidList, setMyAuctionBidList] = useState(false);
+
+  const due = '05-05-2021 00:00:00';
+  const dueDateTime = new Date(due);
+  const diff = +dueDateTime - +new Date();
+
+  const auctionEndTime = new Date(dueDateTime.getTime() + (24 * 60 * 60 * 1000))
 
   const fetchAllAuctions = async () => {
     //Fetch all auctions
@@ -40,10 +46,9 @@ export default function Auction({address, onboardState}) {
     }
   }
 
-
   useEffect(() => {
     fetchAllAuctions();
-  }, [user, address])
+  }, [address, loading])
 
   const auctionItems = auctions.map(item => {
     let exist = false
@@ -61,28 +66,28 @@ export default function Auction({address, onboardState}) {
       {!onboardState.address ?
         <h2>Please connect your wallet</h2>
         :
-        <div id="auction">
-          <div className="auction-notify">
-            <p>Colored box: Auctions items that I've bidded</p>
-            <p>white box: Auctions items that I haven't bidded</p>
-          </div>
-          <div className="auction-content">
-            <div className="user-info">
-              <div className="my-ranking">
-                <img src={user.img} id="my-img" alt="headshot"/>
-                <p>{user.name}</p>
-                <p>{user.num_points} points</p>
+        <div>
+          {diff > 0?
+            <Timer dueDateTime={dueDateTime} />
+            :
+            <div id="auction">
+              <AuctionTimer auctionEndTime={auctionEndTime} />
+              <div className="auction-notify">
+              <p>*Colored box: Auctions items I've bid</p>
               </div>
-              
+              <div className="auction-content">
+                {loading?
+                  <CircularProgress isIndeterminate color="blue.300" />
+                  :
+                  <div className="auction-items">
+                    {auctionItems}
+                  </div>
+                }
+              </div>
             </div>
-            {loading?
-              <CircularProgress isIndeterminate color="blue.300" />
-              :
-              <div className="auction-items">
-                {auctionItems}
-              </div>
-            }
-          </div>
+          }
+          
+          
         </div>
         
       }

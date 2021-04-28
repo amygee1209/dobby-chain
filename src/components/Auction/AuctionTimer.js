@@ -1,11 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import './Timer.css';
 
-export default function Timer({dueDateTime}) {
+export default function AuctionTimer({auctionEndTime}) {
   const [timeLeft, setTimeLeft] = useState(getTimeLeft());
   
   function getTimeLeft() {
-    let diff = +dueDateTime - +new Date();
+    let diff = +auctionEndTime - +new Date();
     let timeLeft = {};
 
     if (diff > 0) {
@@ -27,17 +27,7 @@ export default function Timer({dueDateTime}) {
 
   return (
     <div id="timer">
-      <h1>COMING SOON</h1>
       <div id="timer-setting">
-        <div className="time-box">
-          {timeLeft[0] < 10?
-            <h3>0{timeLeft[0]}</h3>
-            :
-            <h3>{timeLeft[0]}</h3>
-          }
-          <br/>
-          <p>DAYS</p>
-        </div>
         <div className="time-box">
           {timeLeft[1] < 10?
             <h3>0{timeLeft[1]}</h3>

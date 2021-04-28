@@ -7,7 +7,6 @@
 #ranking .my-ranking {
   margin: auto;
   width: 60%;
-  margin-bottom: 4vh;
 }
 #ranking .my-ranking-box {
   display: flex;
@@ -20,13 +19,14 @@
   margin: 2vh 0 10vh;
 }
 #ranking h2{
-  font-size: 3vh;
+  font-size: 4vh;
   font-weight: 500;
-  margin: 0 0 3vh;
+  margin: 0 0 6vh;
 }
 #ranking .my-ranking p{
-  font-size: 2vh;
+  font-size: 2.5vh;
   margin: 0 0 2vh;
+  font-weight: 500;
 }
 #ranking .my-ranking-box img {
   border-radius: 100%;
@@ -43,4 +43,7 @@
 .ranking-wrap {
   flex-wrap: wrap;
   justify-content: start;
+}
+#ranking hr {
+  color: black;
 }

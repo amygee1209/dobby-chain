@@ -5,7 +5,6 @@ import {
   useToast,
   CircularProgress
 } from "@chakra-ui/react";
-import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 export default function CheckIn({address, onboardState}) {
@@ -14,7 +13,6 @@ export default function CheckIn({address, onboardState}) {
   const [missedEvents, setMissedEvents] = useState([]);
   const [status, setStatus] = useState('')
   const [loading, setLoading] = useState(true)
-  const user = useSelector((state) => state.allUsers.selUser)
 
   //design
   const toast = useToast();
@@ -38,7 +36,7 @@ export default function CheckIn({address, onboardState}) {
 
   useEffect(() => {
     fetchEventLists ();
-  }, [user, status])
+  }, [address, status])
 
   function handleSubmit(eventId, inputKey) {
     let formData = new FormData();

@@ -6,11 +6,6 @@ import {
   Switch
 } from "react-router-dom";
 
-//redux imports
-import { selectedUser } from './redux/actions/userActions'
-import { useDispatch} from 'react-redux';
-import axios from 'axios';
-
 //Import components
 import Navbar from './components/Main/Navbar';
 import Main from './components/Main/Main';
@@ -64,26 +59,7 @@ export default function App() {
     }
     //fetch api
     console.log(address)
-    if (address) {
-      fetchUser();
-    }
   }, [address, onboard]);
-
-  //redux
-  //const user = useSelector((state) => state.allUsers.selUser)
-  const dispatch = useDispatch()
-
-  const fetchUser = async () => {
-    const res = await axios
-      .get(`https://dobchain-testing.herokuapp.com/member?address=${address}`)
-      .catch((err) => {
-        console.log("Error:", err);
-      })
-    if (res) {
-      console.log(res.data);
-      dispatch(selectedUser(res.data))
-    }
-  }
   
   
   return onboard ? (
@@ -95,11 +71,11 @@ export default function App() {
             <div className="display-center">
               <Switch>
                 <Route path="/" exact component={Main}/>
-                <Route path="/checkin"><CheckIn address = {address} onboardState={onboard ? onboard.getState() : null}/></Route>
-                <Route path="/ranking"><Ranking address = {address} onboardState={onboard ? onboard.getState() : null}/></Route>
-                <Route path="/auction"><Auction address = {address} onboardState={onboard ? onboard.getState() : null}/></Route>
-                <Route path="/officer"><Officer address = {address} onboardState={onboard ? onboard.getState() : null}/></Route>
-                <Route path="/profile"><Profile address = {address} /></Route>
+                <Route path="/checkin"><CheckIn address={address} onboardState={onboard ? onboard.getState() : null}/></Route>
+                <Route path="/ranking"><Ranking address={address} onboardState={onboard ? onboard.getState() : null}/></Route>
+                <Route path="/auction"><Auction address={address} onboardState={onboard ? onboard.getState() : null}/></Route>
+                <Route path="/officer"><Officer address={address} onboardState={onboard ? onboard.getState() : null}/></Route>
+                <Route path="/profile"><Profile address={address} /></Route>
                 <Route path="/about-us" component={AboutUs}/>
                 <Route>404 Not Found</Route>
               </Switch>

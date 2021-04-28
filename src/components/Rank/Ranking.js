@@ -1,22 +1,18 @@
 import React, {useEffect, useState} from 'react';
 import './Ranking.css';
 import UserRank from './UserRank';
-import { CircularProgress} from "@chakra-ui/react";
-
-//redux imports
-import { setUsers } from './../../redux/actions/userActions'
-import { useDispatch, useSelector } from 'react-redux';
+import { 
+  CircularProgress,
+  Divider
+} from "@chakra-ui/react";
 import axios from 'axios';
 
 export default function Ranking({address, onboardState}) {
   const [ranking, setRanking] = useState([]);
   const [loading, setLoading] = useState(false);
   const [myRank, setMyRank] = useState(null);
+  const [user, setUser] = useState({});
   
-  //redux
-  const user = useSelector((state) => state.allUsers.selUser)
-  const dispatch = useDispatch()
-
   const fetchUsers = async () => {
     console.log("fetching...")
     const res = await axios
@@ -25,7 +21,6 @@ export default function Ranking({address, onboardState}) {
         console.log("Error:", err);
       })
     if (res) {
-      dispatch(setUsers(res.data))
       const sorted = res.data.sort((a, b) => b.num_points - a.num_points);
       //console.log(sorted)
       const ranking = sorted.map(person => {
@@ -41,9 +36,25 @@ export default function Ranking({address, onboardState}) {
     }
   }
 
+  const fetchUser = async () => {
+    const res = await axios
+      .get(`https://dobchain-testing.herokuapp.com/member?address=${address}`)
+      .catch((err) => {
+        console.log("Error:", err);
+      })
+    if (res) {
+      console.log(res.data);
+      setUser(res.data)
+    }
+  }
+
   useEffect(() => {
     fetchUsers();
-  }, [user])
+  }, [user, address])
+
+  useEffect(() => {
+    fetchUser();
+  }, [ranking, address])
 
   const top1Rank = ranking.slice(0,1).map(person =>
     <UserRank user={person} rankingSel={1} key={person.uid} />
@@ -77,14 +88,13 @@ export default function Ranking({address, onboardState}) {
         }
       {loading ?
         <div>
-          <h2>명예의 전당</h2>
-          <p>Number of ppl: {ranking.length}</p>
+          <h2>Hall of Fame</h2>
           <div className="total-ranking">
             {top2Rank}
             {top1Rank}
             {top3Rank}
           </div>
-          <h2>Rest ranking</h2>
+          <hr/>
           <div className="total-ranking ranking-wrap">
             {restRank}
           </div>

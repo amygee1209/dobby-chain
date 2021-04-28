@@ -26,17 +26,12 @@ export default function AboutUs() {
         <h1>Web Dev team</h1>
         <div className="team-member">
           <MemberAbt 
-            name="Brian Lee 이범진" 
-            img={link} 
-            profile={profile}
-          />
-          <MemberAbt 
             name="Amy Kwon 권예은" 
             img={link} 
             profile={profile}
           />
           <MemberAbt 
-            name="김성윤" 
+            name="Brian Lee 이범진" 
             img={link} 
             profile={profile}
           />

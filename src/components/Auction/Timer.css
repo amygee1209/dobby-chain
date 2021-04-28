@@ -1,6 +1,28 @@
-#timer h3 {
+#timer-setting {
   margin: 1vh;
-  font-size: 2.5vh;
+  width: 60%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+#timer-setting h3 {
+  margin: 0;
+  font-size: 7vw;
   text-decoration: none;
   color: black;
+}
+#timer-setting .time-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.time-box p {
+  font-size: 20px;
+}
+#timer h1 {
+  text-align: center;
+  font-size: 4vw;
+  margin: 7vh 0;
+  color: rgb(243, 114, 114);
 }
