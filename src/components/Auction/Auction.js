@@ -2,20 +2,26 @@ import React, {useState, useEffect} from 'react';
 import './Auction.css';
 import AuctionItem from './AuctionItem';
 import axios from 'axios';
-import { CircularProgress} from "@chakra-ui/react";
+import { 
+  CircularProgress, 
+  HStack,
+  Tooltip
+} from "@chakra-ui/react";
+import { QuestionOutlineIcon } from '@chakra-ui/icons'
 import Timer from './Timer';
-import AuctionTimer from './AuctionTimer';
+import AuctionStat from './AuctionStat';
 
-export default function Auction({address, onboardState}) {
+export default function Auction({address}) {
   const [auctions, setAuctions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [myAuctionBidList, setMyAuctionBidList] = useState(false);
 
-  const due = '05-05-2021 00:00:00';
+  const due = '04-29-2021 00:00:00';
   const dueDateTime = new Date(due);
   const diff = +dueDateTime - +new Date();
 
-  const auctionEndTime = new Date(dueDateTime.getTime() + (24 * 60 * 60 * 1000))
+  // dueDateTime.getTime() + (24 * 60 * 60 * 1000)
+  const auctionEndTime = new Date('05-10-2021 00:00:00')
 
   const fetchAllAuctions = async () => {
     //Fetch all auctions
@@ -25,24 +31,25 @@ export default function Auction({address, onboardState}) {
       .catch(err => {
         console.log("Error:", err)
       })
-    
     if(res) {
       console.log(res.data)
       setAuctions(res.data);
-      setLoading(false);
     }
+    fetchMyAuctionBids();
+  }
 
-    //Fetch my auction bid list
+  const fetchMyAuctionBids = async () => {
     console.log("fetching my auction bids...")
     //console.log(item.aid)
-    const res2 = await axios
+    const res = await axios
       .get(`https://dobchain-testing.herokuapp.com/myauctionbid?address=${address}`)
       .catch(err => {
         console.log("Error:", err)
       })
-    if(res2) {
-      console.log(res2.data)
-      setMyAuctionBidList(res2.data)
+    if(res) {
+      console.log(res.data)
+      setMyAuctionBidList(res.data);
+      setLoading(false);
     }
   }
 
@@ -58,39 +65,34 @@ export default function Auction({address, onboardState}) {
     return(
       <AuctionItem address={address} item={item} exist={exist} key={item.aid} />
     )
-  }
-  )
+  })
 
    return (
-    <div>
-      {!onboardState.address ?
-        <h2>Please connect your wallet</h2>
+    <>
+      {diff > 0?
+        <Timer dueDateTime={dueDateTime} />
         :
-        <div>
-          {diff > 0?
-            <Timer dueDateTime={dueDateTime} />
-            :
-            <div id="auction">
-              <AuctionTimer auctionEndTime={auctionEndTime} />
-              <div className="auction-notify">
-              <p>*Colored box: Auctions items I've bid</p>
+        <div id="auction">
+          <AuctionStat auctionEndTime={auctionEndTime} />
+          <div className="auction-notify">
+          <HStack>
+            <p>Colored box</p>
+            <Tooltip hasArrow label="Colored boxes are items I bid" bg="gray.300" color="black">
+              <QuestionOutlineIcon/>
+            </Tooltip>
+          </HStack>
+          </div>
+          <div className="auction-items-list">
+            {loading?
+              <CircularProgress isIndeterminate color="blue.300" />
+              :
+              <div className="auction-items">
+                {auctionItems}
               </div>
-              <div className="auction-content">
-                {loading?
-                  <CircularProgress isIndeterminate color="blue.300" />
-                  :
-                  <div className="auction-items">
-                    {auctionItems}
-                  </div>
-                }
-              </div>
-            </div>
-          }
-          
-          
+            }
+          </div>
         </div>
-        
       }
-    </div>
+    </>
   )
 }

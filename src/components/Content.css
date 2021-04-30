@@ -1,0 +1,24 @@
+.display-center {
+  width: 70%;
+  margin: auto;
+  transition: all .2s ease-in-out;
+}
+#page-container {
+  position: relative;
+}
+#content-wrap {
+  padding-bottom: 500px;
+}
+
+/* Footer css */
+#footer-section {
+  position: absolute;
+  bottom: 0;
+}
+
+@media screen and (max-width: 1100px) {
+  .display-center {
+    width: 90%;
+    transition: all .2s ease-in-out;
+  }
+}

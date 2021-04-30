@@ -1,77 +1,35 @@
 import './AboutUs.css';
+import AboutUsDB from './AboutUsDB';
 import MemberAbt from './MemberAbt';
+import { Stack } from "@chakra-ui/react";
 
 export default function AboutUs() {
-  const link = "https://www.ladbible.com/cdn-cgi/image/width=720,quality=70,format=jpeg,fit=pad,dpr=1/https%3A%2F%2Fs3-images.ladbible.com%2Fs3%2Fcontent%2Ffcbcb4795f6d2949128304106aea0d5a.png"
-  const profile = "/"
+  const allMembers = AboutUsDB.map(member => {
+    return(
+      <MemberAbt member={member} />
+    )
+  })
 
   return(
-    <div id="about-us">
-      <div className="team">
-        <h1>Project chairs</h1>
-        <div className="team-member">
-          <MemberAbt 
-            name="Chris Kim 김형근" 
-            img={link} 
-            profile={profile}
-          />
-          <MemberAbt 
-            name="Jisu Han 한지수" 
-            img={link} 
-            profile={profile}
-          />
+    <Stack id="about-us" spacing="50px">
+      <Stack id="about-us" spacing="24px">
+        <h1>Dobby Story</h1>
+        <div>
+          <p>what is this website about?</p>
+          <p>홍보 영상 올리기</p>
+          <p>journey</p>
+          <p>로그인</p>
+          <p>체크인 하고</p>
+          <p>옥션 하고</p>
+          <p>프로필 편집하고</p>
         </div>
-      </div>
-      <div className="team">
-        <h1>Web Dev team</h1>
-        <div className="team-member">
-          <MemberAbt 
-            name="Amy Kwon 권예은" 
-            img={link} 
-            profile={profile}
-          />
-          <MemberAbt 
-            name="Brian Lee 이범진" 
-            img={link} 
-            profile={profile}
-          />
+      </Stack>
+      <Stack id="about-us" spacing="24px">
+        <h1>Team</h1>
+        <div id="about-us-teams">
+          {allMembers}
         </div>
-      </div>
-      <div className="team">
-        <h1>Smart contract team</h1>
-        <div className="team-member">
-          <MemberAbt 
-            name="Kathy Lee 이경민" 
-            img={link} 
-            profile={profile}
-          />
-          <MemberAbt 
-            name="Harold Kim 김항식" 
-            img={link} 
-            profile={profile}
-          />
-        </div>
-      </div>
-      <div className="team">
-        <h1>Business team</h1>
-        <div className="team-member">
-          <MemberAbt 
-            name="Heesoo Kim 김희수" 
-            img={link} 
-            profile={profile}
-          />
-          <MemberAbt 
-            name="조수빈" 
-            img={link} 
-            profile={profile}
-          />
-          <MemberAbt 
-            name="Seungtaek Oh 오승택" 
-            img={link} 
-            profile={profile}
-          />
-        </div>
-      </div>
-    </div>
+      </Stack>
+    </Stack>
   )
 }

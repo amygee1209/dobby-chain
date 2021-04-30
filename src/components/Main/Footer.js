@@ -11,12 +11,12 @@ export default function Footer() {
   return (
     <div>
       <div className="logo fb-logo">
-        <a href="https://www.facebook.com/kseaatcal">
+        <a href="https://www.facebook.com/kseaatcal" target="_blank" rel="noopener noreferrer">
           <img src={fbLogo} alt="fb logo"/>
         </a>
       </div>
       <div className="logo ig-logo">
-        <a href="https://www.instagram.com/kseaatcal/">
+        <a href="https://www.instagram.com/kseaatcal/" target="_blank" rel="noopener noreferrer">
           <img src={igLogo} alt="ig logo"/>
         </a>
       </div>

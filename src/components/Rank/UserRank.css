@@ -41,10 +41,12 @@
   font-size: 3vh;
   font-weight: 500;
   margin: 1vh 0;
+  color: black;
 }
 .top3-ranking p{
   font-size: 2.3vh;
   margin: 1vh 0;
+  color: black;
 }
 
 .rest-ranking {
@@ -71,7 +73,14 @@
 .rest-ranking h5{
   font-size: 2.2vh;
   font-weight: 500;
+  color: black;
 }
 .rest-ranking p{
   font-size: 2vh;
+  color: black;
+}
+
+.display-email {
+  font-size: 2vh;
+  font-weight: 400;
 }

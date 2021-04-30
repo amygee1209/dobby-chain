@@ -1,11 +1,11 @@
-#auction {
+#auction{
   margin-top: 10vh;
 }
 .auction-notify p {
   font-size: 1.8vh;
   font-weight: 500;
 }
-.auction-content {
+.auction-items-list {
   margin-top: 5vh;
   display: flex;
   flex-direction: row;
@@ -17,10 +17,10 @@
   flex-wrap: wrap;
   justify-content: flex-start;
 }
-.auction-content .user-info{
+.auction-items-list .user-info{
   width: 18%;
 }
-.auction-content div.my-ranking {
+.auction-items-list div.my-ranking {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,16 +31,16 @@
   position: sticky;
   top: 20px;
 }
-.auction-content .my-ranking h4{
+.auction-items-list .my-ranking h4{
   font-size: 3vh;
 }
-.auction-content .my-ranking h5{
+.auction-items-list .my-ranking h5{
   font-size: 2.5vh;
 }
-.auction-content .my-ranking p{
+.auction-items-list .my-ranking p{
   font-size: 2vh;
 }
-.auction-content .my-ranking img{
+.auction-items-list .my-ranking img{
   border-radius: 50%;
   width: 8vw;
   height: 8vw;

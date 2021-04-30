@@ -6,16 +6,9 @@ import React, { useEffect, useState} from 'react';
 
 import axios from 'axios';
 import {
-  Button, 
-  Input,
-  Stack,
+  Button, Input, Stack, Flex,
   useToast,
-  Box,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon
+  Tabs, TabList, TabPanels, Tab, TabPanel
 } from "@chakra-ui/react";
 
 //Import officer components
@@ -23,7 +16,7 @@ import ManageAuction from './ManageAuction';
 import ManageCheckin from './ManageCheckin';
 import ManageMember from './ManageMember';
 
-export default function Officer({address, onboardState}) {
+export default function Officer({address}) {
   //design
   const toast = useToast()
   const toastIdRef = React.useRef()
@@ -225,153 +218,105 @@ export default function Officer({address, onboardState}) {
   }
 
   return airdrop && token? (
-    <div>
-      {!onboardState.address ?
-        <h2>Please Connect Your Wallet</h2>
-        :
-        <div>
-        <Accordion allowMultiple id='officer'>
-          <AccordionItem>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                <h1>Officer Management</h1>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Stack spacing={5} className="create-new">
-                <h2>Register</h2>
-                <Input 
-                  onChange={handleBoardChange} 
-                  placeholder="officer metamask address"
-                />
-                <Button onClick={handleRegister} colorScheme="green">
-                  Register Officer
-                </Button>
+    <Flex justifyContent="center" id='officer'>
+    <Tabs isFitted variant="enclosed" style={{width: "70%"}}>
+      <TabList>
+        <Tab><h1>Officer Management</h1></Tab>
+        <Tab><h1>Distribute Dobby</h1></Tab>
+        <Tab><h1>Distribute Ether</h1></Tab>
+        <Tab><h1>Auction</h1></Tab>
+        <Tab><h1>Checkin Event</h1></Tab>
+        <Tab><h1>Member Management</h1></Tab>
+      </TabList>
+      <TabPanels>
+        <TabPanel>
+          <Stack spacing={5} className="create-new">
+            <h3>Register</h3>
+            <Input 
+              onChange={handleBoardChange} 
+              placeholder="officer metamask address"
+            />
+            <Button onClick={handleRegister} colorScheme="green">
+              Register Officer
+            </Button>
 
-                <h2>Deregister</h2>
-                <Input 
-                  onChange={handleBoardChange} 
-                  placeholder="officer metamask address"
-                />
-                <Button onClick={handleDeregister} colorScheme="red">
-                  Deregister Officer
-                </Button>
-              </Stack>
-            </AccordionPanel>
-          </AccordionItem>
+            <h3>Deregister</h3>
+            <Input 
+              onChange={handleBoardChange} 
+              placeholder="officer metamask address"
+            />
+            <Button onClick={handleDeregister} colorScheme="red">
+              Deregister Officer
+            </Button>
+          </Stack>
+        </TabPanel>
 
-          <AccordionItem>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                <h1>Distribute Dobby</h1>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Stack spacing={5} className="create-new">
-                <Input
-                  name="eventId"
-                  type="number"
-                  value={eventId}
-                  onChange={handleDistributeChange} 
-                  placeholder="event Id"
-                />
-                <Button onClick={handleViewCheckedinMembers} colorScheme="green">
-                  View members
-                </Button>
-                {viewListofMembers.length > 0?
-                  <div>List of members: {viewListofMembers}</div>
-                  :
-                  <div>List of members: none</div>
-                }
-                <Input
-                  name="inputToken"
-                  type="number"
-                  value={inputToken}
-                  onChange={handleDistributeChange} 
-                  placeholder="token amount"
-                />
-                <Button onClick={handleDistributeToken} colorScheme="blue">
-                  Distribute Dobby
-                </Button>
-              </Stack>
-            </AccordionPanel>
-          </AccordionItem>
-
-          <AccordionItem>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                <h1>Distribute Ether</h1>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <Stack spacing={5} className="create-new">
-                <Input
-                  name="inputEther"
-                  type="number"
-                  value={inputEther}
-                  onChange={handleDistributeChange} 
-                  placeholder="Ether amount"
-                />
-                <Button onClick={handleDistributeEther} colorScheme="blue">
-                  Distribute Ether
-                </Button>
-              </Stack>
-              </AccordionPanel>
-          </AccordionItem>
-
-          <AccordionItem>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                <h1>Auction</h1>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <ManageAuction
-                auctionName = {auctionName}
-                auctionImg = {auctionImg}
-                auctionDuration = {auctionDuration}
-                handleAuction = {handleAuction}
-                handleAuctionChange = {handleAuctionChange}
+        <TabPanel>
+          <Stack spacing={5} className="create-new">
+              <Input
+                name="eventId"
+                type="number"
+                value={eventId}
+                onChange={handleDistributeChange} 
+                placeholder="event Id"
               />
-            </AccordionPanel>
-          </AccordionItem>
+              <Button onClick={handleViewCheckedinMembers} colorScheme="green">
+                View members
+              </Button>
+              {viewListofMembers.length > 0?
+                <div>List of members: {viewListofMembers}</div>
+                :
+                <div>List of members: none</div>
+              }
+              <Input
+                name="inputToken"
+                type="number"
+                value={inputToken}
+                onChange={handleDistributeChange} 
+                placeholder="token amount"
+              />
+              <Button onClick={handleDistributeToken} colorScheme="blue">
+                Distribute Dobby
+              </Button>
+            </Stack>
+        </TabPanel>
 
-          <AccordionItem>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                <h1>Checkin Event</h1>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <ManageCheckin />
-            </AccordionPanel>
-          </AccordionItem>
+        <TabPanel>
+          <Stack spacing={5} className="create-new">
+            <Input
+              name="inputEther"
+              type="number"
+              value={inputEther}
+              onChange={handleDistributeChange} 
+              placeholder="Ether amount"
+            />
+            <Button onClick={handleDistributeEther} colorScheme="blue">
+              Distribute Ether
+            </Button>
+          </Stack>
+        </TabPanel>
 
-          <AccordionItem>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                <h1>Member Management</h1>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-            <AccordionPanel pb={4}>
-              <ManageMember />
-            </AccordionPanel>
-          </AccordionItem>
+        <TabPanel>
+          <ManageAuction
+            auctionName = {auctionName}
+            auctionImg = {auctionImg}
+            auctionDuration = {auctionDuration}
+            handleAuction = {handleAuction}
+            handleAuctionChange = {handleAuctionChange}
+          />
+        </TabPanel>
 
-        </Accordion>
-          {/* //   :
-          //   <div>You Are Not An Officer</div>
-          // } */}
+        <TabPanel>
+          <ManageCheckin />
+        </TabPanel>
 
-        </div>
-      }
-    </div>
+        <TabPanel>
+          <ManageMember />
+        </TabPanel>
+        
+      </TabPanels>
+    </Tabs>
+  </Flex>
   ) : (
     <div>Loading...</div>
   )

@@ -28,7 +28,7 @@ export default function Timer({dueDateTime}) {
   return (
     <div id="timer">
       <h1>COMING SOON</h1>
-      <div id="timer-setting">
+      <div className="timer-setting">
         <div className="time-box">
           {timeLeft[0] < 10?
             <h3>0{timeLeft[0]}</h3>

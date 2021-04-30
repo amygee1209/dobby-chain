@@ -1,16 +1,24 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import {
-  Button, 
-  Input,
-  Stack,
+  Button, Input, Stack,
   InputRightAddon,
   InputGroup,
   Textarea,
   useToast,
   FormControl,
   FormLabel,
-  Switch
+  Switch,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+  Kbd
 } from "@chakra-ui/react";
+import { WarningTwoIcon } from '@chakra-ui/icons';
 import './Officer.css';
 import axios from 'axios';
 
@@ -18,6 +26,7 @@ export default function ManageCheckin() {
   //design
   const toast = useToast();
   const toastIdRef = React.useRef();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   // New checkin event info
   const [name, setName] = useState('');
@@ -26,8 +35,9 @@ export default function ManageCheckin() {
   const [detail, setDetail] = useState('');
   const [eventPoint, setEventPoint] = useState('');
   const [deleteEventId, setDeleteEventId] = useState('');
+  const [deleteAll, setDeleteAll] = useState(false);
+  const [deleteAllConfirm, setDeleteAllConfirm] = useState('');
 
-  
   // Manage checkins
   function handleSubmit(event) {
     event.preventDefault();
@@ -39,25 +49,92 @@ export default function ManageCheckin() {
     formData.append('eventDetails', detail);
     axios.post(`https://dobchain-testing.herokuapp.com/event`, formData)
       .then(res => {
-        if (res.data.status === "success") {
-          toastIdRef.current = toast({ description: `${name} created` })
-          setName('');
-          setTimelimit('');
-          setPassword('');
-          setDetail('');
-          setEventPoint('');
-        }
+        console.log(res.data)
+        toastIdRef.current = toast({
+          title: "Success",
+          description: res.data.status,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        })
+        setName('');
+        setTimelimit('');
+        setPassword('');
+        setDetail('');
+        setEventPoint('');
       })
   }
 
   function handleDeleteEvent(event) {
     event.preventDefault();
-    axios.delete(`https://dobchain-testing.herokuapp.com/event?eventId=${deleteEventId}`)
+    if (deleteAll) {
+      onOpen();
+    } else {
+      axios.delete(`https://dobchain-testing.herokuapp.com/event?eventId=${deleteEventId}`)
+        .then(res => {
+          console.log(res.data)
+          const dataStatus = res.data.status;
+          toastIdRef.current = toast({
+            title: dataStatus.charAt(0).toUpperCase() + dataStatus.slice(1),
+            description: res.data.statusDes,
+            status: dataStatus,
+            duration: 9000,
+            isClosable: true,
+          })
+          setDeleteEventId('');
+        })
+    }
+  }
+
+  function handleDeleteAllEvents(event) {
+    event.preventDefault();
+    //console.log(deleteAllConfirm)
+    if (deleteAllConfirm !== "Delete all events") {
+      toastIdRef.current = toast({
+          title: "Error",
+          description: "Incorrect confirmation",
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        })
+      handleClose();
+      return;
+    }
+    //delete all events
+    axios.delete(`https://dobchain-testing.herokuapp.com/events`)
       .then(res => {
         console.log(res.data)
-        toastIdRef.current = toast({ description: res.data.status })
-        setDeleteEventId('');
+        toastIdRef.current = toast({
+          title: "Success",
+          description: res.data.status,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        })
+        handleDeleteAllCheckins();
       })
+  }
+
+  function handleDeleteAllCheckins() {
+    //delete all checkins
+    axios.delete(`https://dobchain-testing.herokuapp.com/checkins`)
+      .then(res => {
+        console.log(res.data)
+        toastIdRef.current = toast({
+          title: "Success",
+          description: res.data.status,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        })
+        handleClose();
+      })
+  }
+
+  function handleClose() {
+    setDeleteAll(false);
+    setDeleteAllConfirm('');
+    onClose();
   }
 
   function handleChange(event) {
@@ -73,55 +150,55 @@ export default function ManageCheckin() {
       setDetail(value);
     } else if (name === "eventPoint") {
       setEventPoint(value);
-    } else {
+    } else if (name === "deleteEventId") {
       setDeleteEventId(value);
+    } else if (name === "deleteAll") {
+      setDeleteAll(val => !val);
+    } else if (name === "deleteAllConfirm") {
+      setDeleteAllConfirm(value);
     }
   }
       
   return (
     <Stack spacing={5} className="create-new">
-      <h2>Event Name:</h2>
+      <h3>Add New Event</h3>
       <Input
         value={name}
         onChange={handleChange} 
         name="name" 
-        placeholder="name"
+        placeholder="event name"
       />
-      <h2>Event Password:</h2>
       <Input
         value={password}
         onChange={handleChange} 
         name="password" 
-        placeholder="password"
+        placeholder="event password"
       />
-      <h2>Event Points:</h2>
       <InputGroup>
         <Input
           type="number"
           value={eventPoint}
           onChange={handleChange} 
           name="eventPoint"
-          placeholder="points"
+          placeholder="event points"
         />
-        <InputRightAddon children="points" />
+        <InputRightAddon children="points"  color="black" />
       </InputGroup>
-      <h2>Event Details:</h2>
       <Textarea
         name="detail"
         value={detail}
         onChange={handleChange}
-        placeholder="details"
+        placeholder="event details"
       />
-      <h2>Event Time Limit:</h2>
       <InputGroup>
         <Input
           type="number"
           value={timelimit}
           onChange={handleChange} 
           name="timelimit" 
-          placeholder="time limit"
+          placeholder="event time limit"
         />
-        <InputRightAddon children="min" />
+        <InputRightAddon children="min"  color="black" />
       </InputGroup>
       <Button 
         onClick={handleSubmit} 
@@ -129,7 +206,7 @@ export default function ManageCheckin() {
         Create Event
       </Button>
 
-      <h2>Delete Event</h2>
+      <h3>Delete Event</h3>
       <Input
         name="deleteEventId"
         value={deleteEventId}
@@ -140,11 +217,49 @@ export default function ManageCheckin() {
         <FormLabel htmlFor="email-alerts" mb="3">
           <h5>Delete All?</h5>
         </FormLabel>
-        <Switch id="email-alerts" colorScheme="red" />
+        <Switch 
+          id="email-alerts" 
+          colorScheme="red" 
+          name="deleteAll"
+          onChange={handleChange}
+          defaultChecked={false}
+          isChecked={deleteAll}
+        />
       </FormControl>
       <Button onClick={handleDeleteEvent} colorScheme="red">
         Delete Event
       </Button>
+
+      <Modal isOpen={isOpen} onClose={handleClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>DELETING ALL EVENTS <WarningTwoIcon/> </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Stack spacing="10px">
+              <p>Are you sure?</p>
+              <p>This action cannot be undone. 
+              This will permanently delete all event and checkin database.</p>
+              <p>Please type 
+              <span>
+                <Kbd color="black">Delete all events</Kbd>
+              </span>
+              to confirm.</p>
+              <Input 
+                name="deleteAllConfirm"
+                value={deleteAllConfirm}
+                onChange={handleChange}
+                size="sm"
+              />
+            </Stack>
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={handleDeleteAllEvents} colorScheme="red">
+              I understand the consequence, delete all
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Stack>
   )
 }

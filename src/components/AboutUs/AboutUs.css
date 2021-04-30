@@ -1,39 +1,10 @@
-#about-us .team{
-  margin: 10vh 0;
+#about-us h1 {
+  font-size: 4vh;
+  font-weight: 600;
 }
-#about-us .team-member{
-  margin: 5vh 3vw 0;
+#about-us-teams {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
-}
-#about-us h1 {
-  font-size: 3vh;
-  font-weight: 600;
-}
-.member-about {
-  width: 20%;
-}
-.member-about a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: all .2s ease-in-out;
-  text-decoration: none;
-}
-.member-about a:hover {
-  transform: scale(1.1); 
-  cursor: pointer;
-  text-decoration: none;
-}
-.member-about img {
-  border-radius: 100%;
-  width: 5vw;
-  height: 5vw;
-  object-fit: cover;
-}
-.member-about h2 {
-  margin-top: 1.5vh;
-  font-size: 1.7vh;
+  justify-content: space-between;
 }

@@ -10,11 +10,13 @@ export default function Main() {
         <Stack spacing="6vh">
           <h1>We build KSEA's economy</h1>
           <h3>Participate in KSEA events and earn prizes!</h3>
-          <Link to="/about-us">
-            <button type="button" className="abtus-btn">
-              About Us
-            </button>
-          </Link>
+          <div>
+            <Link to="/about-us">
+              <button type="button" className="abtus-btn">
+                About Us
+              </button>
+            </Link>
+          </div>
         </Stack>
         <img src={MainImg} alt="main img"/>
       </HStack>
@@ -22,12 +24,12 @@ export default function Main() {
       <iframe
         className="main-video"
         width="70%" 
-        height="600" 
-        src="https://www.youtube.com/embed/tJ5pvZYrFEc" 
+        height="500" 
+        src="https://www.youtube.com/embed/tJ5pvZYrFEc?autoplay=1&mute=1" 
         title="YouTube video player" 
-        frameborder="0" 
+        frameBorder="0" 
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-        allowfullscreen></iframe>
+        allowFullScreen></iframe>
     </div>
   )
 }

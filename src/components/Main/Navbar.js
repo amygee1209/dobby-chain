@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import kseAirdrop from '../ethereum/KSEAirdrop';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
 import { 
@@ -8,17 +9,20 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverBody,
+  PopoverFooter,
   PopoverArrow,
   PopoverCloseButton
  } from "@chakra-ui/react";
 import { 
   HamburgerIcon, 
-  CloseIcon 
+  CloseIcon
 } from '@chakra-ui/icons';
 import axios from 'axios';
 
-export default function Navbar({onboard, onboardState}) {
-  const [user, setUser] = useState({});
+
+export default function Navbar({onboard, onboardState, themeBtn}) {
+  const [name, setName] = useState(undefined);
+  const [isBoard, setIsBoard] = useState(false);
   let address = onboardState.address;
 
   async function readyToTransact() {
@@ -39,18 +43,24 @@ export default function Navbar({onboard, onboardState}) {
     <Popover>
       <PopoverTrigger>
         <Button colorScheme="teal" variant="outline">
-          {user.name}
+          {name}
         </Button>
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />
         <PopoverCloseButton />
-        <PopoverHeader>Need Help?</PopoverHeader>
+        <PopoverHeader>
+          <p>Welcome to KSEA!</p>
+        </PopoverHeader>
         <PopoverBody>
+          <p>Need Help?</p>
           <a href="https://metamask.io/" className="tutorial-link">
             Try this tutorial!
           </a>
         </PopoverBody>
+        <PopoverFooter>
+          <p>Change mode {themeBtn}</p>
+        </PopoverFooter>
       </PopoverContent>
     </Popover>
     
@@ -60,16 +70,30 @@ export default function Navbar({onboard, onboardState}) {
   const handleClick = () => setmenuClick(!menuClick);
   const closeMenu = () => setmenuClick(false);
 
-  useEffect(() => {
-    axios.get(`https://dobchain-testing.herokuapp.com/member?address=${address}`)
+  function fetchUser(addr) {
+    axios.get(`https://dobchain-testing.herokuapp.com/member?address=${addr}`)
       .then(res => {
         console.log(res.data);
-        setUser(res.data)
+        setName(res.data.memberInfo.name) 
       })
       .catch((err) => {
         console.log("Error:", err);
       })
-  }, [onboard, onboardState])
+    }
+
+ async function fetchBoardStatus(_address) {
+    let airdrop = await kseAirdrop()
+    if (airdrop && _address) {
+      let board = await airdrop.methods.isBoardMember(_address).call();
+      console.log("I am board member:" , board)
+      setIsBoard(board)
+    }
+  }
+
+  useEffect(() => {
+    fetchUser(address)
+    fetchBoardStatus(address);
+  }, [address]);
 
   return (
     <div>
@@ -83,6 +107,7 @@ export default function Navbar({onboard, onboardState}) {
               <HamburgerIcon w={6} h={6}/>
             }
           </div>
+          
           <ul className={menuClick ? 'nav-menu active' : 'nav-menu'}>
             <li className='nav-item'>
               <Link to="/checkin" onClick={closeMenu} className='nav-links'>Check In</Link>
@@ -93,16 +118,22 @@ export default function Navbar({onboard, onboardState}) {
             <li className='nav-item'>
               <Link to="/auction" onClick={closeMenu} className='nav-links'>Auction</Link>
             </li>
+            {/* {isBoard?
+              <li className='nav-item'>
+                <Link to="/officer" onClick={closeMenu} className='nav-links'>Officer</Link>
+              </li>
+              :
+              null
+            } */}
             <li className='nav-item'>
-              <Link to="/officer" onClick={closeMenu} className='nav-links'>Officer</Link>
+              <Link to="/restricted-officer-page" onClick={closeMenu} className='nav-links'>Officer</Link>
             </li>
             <li className='nav-item'>
               <Link to="/profile" onClick={closeMenu} className='nav-links'>Profile</Link>
             </li>
-            <li className="wallet-btn">
-              {walletBtn}
-            </li>
-            </ul>
+            <li className="wallet-btn">{walletBtn}</li>
+          </ul>
+            
         </nav> 
       </div>
     </div>

@@ -22,6 +22,7 @@
   cursor: pointer;
 }
 .auction-item-img {
+  border-radius: 5%;
   display: inline-block;
   width: 20vh;
   height: 20vh;
@@ -42,6 +43,7 @@
   word-wrap: break-word;
 }
 .contractAddr-img {
+  border-radius: 5%;
   margin: auto;
   display: inline-block;
   width: 35vh;

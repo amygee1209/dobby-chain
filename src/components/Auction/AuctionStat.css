@@ -1,0 +1,25 @@
+#auction-timer {
+  margin-bottom: 13vh;
+}
+#auction-timer .timer-setting {
+  margin: 1vh;
+  width: 80%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+#auction-timer .timer-setting h3 {
+  margin: 0;
+  font-size: 5vw;
+  text-decoration: none;
+}
+#auction-timer .timer-setting .time-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#auction-timer .time-box p {
+  font-size: 15px;
+}

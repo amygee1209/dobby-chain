@@ -1,19 +1,27 @@
 import React, {useState, useEffect} from 'react';
 import './Profile.css';
 import {
-  Button,
   Input,
   Stack,
   useToast,
-  CircularProgress
+  CircularProgress,
+  ButtonGroup,
+  IconButton,
+  Flex
 } from "@chakra-ui/react";
+import { 
+  CloseIcon, 
+  CheckIcon, 
+  EditIcon
+} from '@chakra-ui/icons';
 import axios from 'axios';
+import defaultImg from './../img/default.jpg';
 
 export default function Profile({address}) {
   const [edit, setEdit] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(undefined);
   const [loading, setLoading] = useState(true);
 
   //design
@@ -21,21 +29,22 @@ export default function Profile({address}) {
   const toastIdRef = React.useRef();
 
   const fetchUser = async () => {
+    console.log("fetch member info...")
     const res = await axios
       .get(`https://dobchain-testing.herokuapp.com/member?address=${address}`)
       .catch((err) => {
         console.log("Error:", err);
       })
     if (res) {
-      console.log(res.data);
-      setUser(res.data)
+      //console.log(res.data);
+      setUser(res.data.memberInfo)
       setLoading(false);
     }
   }
 
   useEffect(() => {
     fetchUser();
-  }, [address, loading])
+  }, [address])
 
   const updateUserInfo = async () => {
     console.log("update member info...")
@@ -54,8 +63,16 @@ export default function Profile({address}) {
       })
     
     if(res) {
-      console.log(res.data.status)
-      toastIdRef.current = toast({ description: "Your info has been updated!" })
+      //console.log(res.data)
+      const dataStatus = res.data.status;
+      toastIdRef.current = toast({
+        title: dataStatus.charAt(0).toUpperCase() + dataStatus.slice(1),
+        description: res.data.statusDes,
+        status: dataStatus,
+        duration: 10000,
+        isClosable: true,
+      })
+      handleReset();
     }
   }
 
@@ -73,63 +90,57 @@ export default function Profile({address}) {
       setEmail(value)
     }
   }
+  
+  function handleReset() {
+    setName('')
+    setEmail('')
+  }
 
   return (
-    <div>
-      {user === {} ?
-        <h2>Please connect your wallet</h2>
+    <>
+      {loading?
+        <CircularProgress isIndeterminate color="blue.300" />
         :
-        <div>
-        {user === undefined?
-          <div>
-            <h1>Your are not a registered member</h1>
-            <h2>Please ask the officer to be registered</h2>
-          </div>
-          :
-          <div>
-          {loading?
-            <CircularProgress isIndeterminate color="blue.300" />
+        <div id="profile">
+          {user.img?
+            <img src={user.img} alt="default headshot"/>
             :
-            <div className="profile">
-              <img src={user.img} alt="headshot"/>
-              <div className="info">
-                {edit ?
-                  <Stack spacing={5}>
-                    <Input 
-                      type="text"
-                      name="name"
-                      value={name}
-                      placeholder={user.name}
-                      onChange={handleChange}
-                    />
-                    <Input 
-                      type="text"
-                      name="email"
-                      value={email}
-                      placeholder={user.email}
-                      onChange={handleChange}
-                    />
-                    <Button onClick={handleSubmit} colorScheme="teal" variant="outline">
-                      Finish Edit
-                    </Button>
-                  </Stack>
-                  :
-                  <Stack spacing={5}>
-                    <h5>{user.name}</h5>
-                    <h5>{user.email}</h5>
-                    <Button onClick={() => setEdit(true)} colorScheme="teal" variant="outline">
-                      Edit Profile
-                    </Button>
-                  </Stack>
-                }
-              </div>
-            </div>
+            <img src={defaultImg} alt="headshot"/>
           }
+          <div className="info">
+            {edit ?
+              <Stack spacing={5}>
+                <Input 
+                  type="text"
+                  name="name"
+                  value={name}
+                  placeholder={user.name}
+                  onChange={handleChange}
+                />
+                <Input 
+                  type="text"
+                  name="email"
+                  value={email}
+                  placeholder={user.email}
+                  onChange={handleChange}
+                />
+                <ButtonGroup justifyContent="center" size="sm">
+                  <IconButton icon={<CheckIcon color="black"/>} onClick={handleSubmit} />
+                  <IconButton icon={<CloseIcon color="black"/>} onClick={() => {setEdit(false); handleReset();}} />
+                </ButtonGroup>
+              </Stack>
+              :
+              <Stack spacing={5}>
+                <h5>{user.name}</h5>
+                <h5>{user.email}</h5>
+                <Flex justifyContent="center">
+                  <IconButton size="sm" icon={<EditIcon color="black"/>} onClick={() => setEdit(true)} />
+                </Flex>
+              </Stack>
+            }
           </div>
-        }
         </div>
-        
       }
-    </div>
+    </>
   ); 
 }

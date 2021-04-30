@@ -34,21 +34,20 @@ export default function ManageMember() {
         "address": address
       }
     ).then(res => {
-      console.log(res.data)
-      if (res.data.success) {
-        toastIdRef.current = toast({
-          title: "Member created.",
-          description: `${name} created successfully.`,
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-        })
-        setName('');
-        setEmail('');
-        setImg('');
-        setNumPoints('');
-        setAddress('');
-      }
+      console.log(res.data);
+      const dataStatus = res.data.status;
+      toastIdRef.current = toast({
+        title: dataStatus.charAt(0).toUpperCase() + dataStatus.slice(1),
+        description: res.data.statusDes,
+        status: dataStatus,
+        duration: 9000,
+        isClosable: true,
+      })
+      setName('');
+      setEmail('');
+      setImg('');
+      setNumPoints('');
+      setAddress('');
     })
   }
 
@@ -56,8 +55,15 @@ export default function ManageMember() {
     event.preventDefault();
     axios.delete(`https://dobchain-testing.herokuapp.com/member?address=${deleteMemAddr}`)
     .then(res => {
-      console.log(res.data)
-      toastIdRef.current = toast({ description: res.data.status })
+      console.log(res.data);
+      const dataStatus = res.data.status;
+      toastIdRef.current = toast({
+        title: dataStatus.charAt(0).toUpperCase() + dataStatus.slice(1),
+        description: res.data.statusDes,
+        status: dataStatus,
+        duration: 9000,
+        isClosable: true,
+      })
       setDeleteMemAddr('');
     })
   }
@@ -83,7 +89,7 @@ export default function ManageMember() {
       
   return (
     <Stack spacing={5} className="create-new">
-      <h2>Add new member</h2>
+      <h3>Add new member</h3>
       <Input
         name="name"
         value={name}
@@ -117,7 +123,7 @@ export default function ManageMember() {
       <Button onClick={handleAddMember} colorScheme="green">
         Add Member
       </Button>
-      <h2>Delete Member</h2>
+      <h3>Delete Member</h3>
       <Input
         name="deleteMemAddr"
         value={deleteMemAddr}

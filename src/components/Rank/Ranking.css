@@ -8,6 +8,15 @@
   margin: auto;
   width: 60%;
 }
+#ranking .my-ranking h3 {
+  font-size: 2.5vh;
+  font-weight: 500;
+  margin-bottom: 2vh;
+  text-align: center;
+}
+#ranking .my-ranking p {
+  color: black;
+}
 #ranking .my-ranking-box {
   display: flex;
   flex-direction: row;
@@ -18,7 +27,7 @@
   padding: 2vh 5vh;
   margin: 2vh 0 10vh;
 }
-#ranking h2{
+#ranking h1{
   font-size: 4vh;
   font-weight: 500;
   margin: 0 0 6vh;

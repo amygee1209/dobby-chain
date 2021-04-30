@@ -1,18 +1,13 @@
-#officer {
-  width: 70%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-}
 #officer .create-new {
+  margin-top: 7vh;
   border: solid 1px rgb(207, 207, 207);
   border-radius: 20px;
   padding: 2vw;
   display: block;
 }
 #officer h1 {
-  font-size: 2.5vh;
-  font-weight: 500;
+  font-size: 2vh;
+  font-weight: 400;
   margin: 1vh 0;
 }
 .create-new h5 {
