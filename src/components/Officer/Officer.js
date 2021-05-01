@@ -226,24 +226,17 @@ export default function Officer({address}) {
     }
   }
 
-
-  function showNotBoardError() {
-    toastIdRef.current = toast({
-      title: "Error",
-      description: "You are not a board member",
-      status: "error",
-      duration: 9000,
-      isClosable: true,
-    })
-  }
-
   useEffect(() => {
     fetchBoardStatus(address);
-  }, [address]);
+  }, [address, airdrop]);
 
   return airdrop && token? (
     <Flex flexDirection="column" alignItems="center" id='officer'>
-    <h1>You are {isBoard? null: "not"} a registered board member</h1>
+    {isBoard? 
+      null
+      : 
+      <h1>You are not a registered board member</h1>
+    }
     <Tabs isFitted variant="enclosed" style={{width: "70%"}}>
       <TabList>
         <Tab><h3>Officer Management</h3></Tab>

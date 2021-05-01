@@ -76,7 +76,7 @@ const AboutUsDB = [
     korean: "조수빈",
     img: "https://docs.google.com/uc?export=download&id=1evQIZnlxDRiMnMzhAmJkj1gv-TQ2EzkK",
     profile: '/',
-    position1: "Business",
+    position1: "Business Associate",
     boxColor1: "#F2CEE6"
   },
   {
@@ -84,7 +84,7 @@ const AboutUsDB = [
     korean: "오승택",
     img: "https://docs.google.com/uc?export=download&id=1ZanNQ0YD9rmMBkpUydM2lNeGR1EYwwkI",
     profile: '/',
-    position1: "Business",
+    position1: "Business Associate",
     boxColor1: "#F2CEE6"
   }
 ]

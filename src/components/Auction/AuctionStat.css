@@ -23,3 +23,7 @@
 #auction-timer .time-box p {
   font-size: 15px;
 }
+#auction-timer .auction-stat p {
+  font-size: 10px;
+  margin-left: 1.5vw;
+}

@@ -123,7 +123,7 @@ export default function ManageAuction(
 
   return (
     <Stack spacing={5} className="create-new">
-      <h3>Create auction</h3>
+      <h4>Create Auction</h4>
       <Input
         name="auctionName" 
         value={auctionName}
@@ -156,7 +156,7 @@ export default function ManageAuction(
         Create Auction
       </Button>
 
-      <h3>Delete Auction</h3>
+      <h4>Delete Auction</h4>
       <Input
         type="number"
         name="deleteAuctionId"

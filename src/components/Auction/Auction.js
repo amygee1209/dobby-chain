@@ -15,13 +15,17 @@ export default function Auction({address}) {
   const [auctions, setAuctions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [myAuctionBidList, setMyAuctionBidList] = useState(false);
+  const [totalBid, setTotalBid] = useState('');
+  const [totalBidMem, setTotalBidMem] = useState('');
 
   const due = '04-29-2021 00:00:00';
   const dueDateTime = new Date(due);
   const diff = +dueDateTime - +new Date();
 
-  // dueDateTime.getTime() + (24 * 60 * 60 * 1000)
-  const auctionEndTime = new Date('05-10-2021 00:00:00')
+  const auctionEndTime = new Date('05-31-2021 20:00:00')
+  const auctionDiff = +auctionEndTime - +new Date();
+  // const thirty = +new Date('04-30-2021 20:30:00') - +new Date('04-30-2021 20:00:00')
+  // console.log(thirty)
 
   const fetchAllAuctions = async () => {
     //Fetch all auctions
@@ -57,13 +61,46 @@ export default function Auction({address}) {
     fetchAllAuctions();
   }, [address, loading])
 
+  //fetch total bids
+  const fetchTotalBids = async () => {
+    console.log("fetching total bids...")
+    const res = await axios
+      .get(`https://dobchain-testing.herokuapp.com/totalauctionbids`)
+      .catch(err => {
+        console.log("Error:", err)
+      })
+    if(res) {
+      console.log(res.data)
+      setTotalBid(res.data);
+    }
+  }
+
+  //fetch total number of people who bid on at least one item
+  const fetchTotalBidMem = async () => {
+    console.log("fetching total bids...")
+    const res = await axios
+      .get(`https://dobchain-testing.herokuapp.com/totalbidmember`)
+      .catch(err => {
+        console.log("Error:", err)
+      })
+    if(res) {
+      console.log(res.data)
+      setTotalBidMem(res.data);
+    }
+  }
+
+  useEffect(() => {
+    fetchTotalBids();
+    fetchTotalBidMem();
+  }, [auctions, myAuctionBidList])
+
   const auctionItems = auctions.map(item => {
     let exist = false
     if (myAuctionBidList.length > 0 && myAuctionBidList.includes(item.aid)) {
       exist = true
     }
     return(
-      <AuctionItem address={address} item={item} exist={exist} key={item.aid} />
+      <AuctionItem address={address} item={item} exist={exist} auctionDiff={auctionDiff} key={item.aid} />
     )
   })
 
@@ -73,7 +110,11 @@ export default function Auction({address}) {
         <Timer dueDateTime={dueDateTime} />
         :
         <div id="auction">
-          <AuctionStat auctionEndTime={auctionEndTime} />
+          <AuctionStat 
+            auctionEndTime={auctionEndTime} 
+            totalBid={totalBid} 
+            totalBidMem={totalBidMem}
+          />
           <div className="auction-notify">
           <HStack>
             <p>Colored box</p>

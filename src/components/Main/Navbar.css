@@ -17,12 +17,12 @@
   text-decoration: none;
 }
 .nav-menu {
+  width: 70%;
   display: grid;
   grid-template-columns: repeat(6, auto);
-  grid-gap: 2vw;
   list-style: none;
   align-items: center;
-  justify-content: end;
+  justify-content: space-between;
 }
 .nav-item {
   text-decoration: none;
@@ -51,6 +51,7 @@
     position: relative;
   }
   .nav-menu {
+    width: 230px;
     display: flex;
     flex-direction: column;
     position: absolute;

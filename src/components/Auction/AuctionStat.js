@@ -6,11 +6,10 @@ import {
   StatNumber,
   StatHelpText,
   StatArrow,
-  StatGroup,
   Flex
 } from "@chakra-ui/react";
 
-export default function AuctionStat({auctionEndTime}) {
+export default function AuctionStat({auctionEndTime, totalBid, totalBidMem}) {
   const [timeLeft, setTimeLeft] = useState(getTimeLeft());
   
   function getTimeLeft() {
@@ -67,22 +66,40 @@ export default function AuctionStat({auctionEndTime}) {
           </div>
         </Flex>
 
-        <Flex flexDirection="column" justifyContent="space-between" width="40%">
+        <Flex 
+          flexDirection="column" 
+          justifyContent="space-between" 
+          width="40%"
+          className="auction-stat"
+        >
           <Stat>
             <StatLabel>Total Dobby spent</StatLabel>
-            <StatNumber>345,670</StatNumber>
+            <Flex
+              flexDirection="row" 
+              alignItems="baseline"
+            >
+              <StatNumber>{totalBid}</StatNumber>
+              <p>/1200</p>
+            </Flex>
             <StatHelpText>
               <StatArrow type="increase" />
-              23.36%
+              {parseFloat(totalBid/1200 * 100).toFixed(2)}%
             </StatHelpText>
           </Stat>
 
-          <Stat>
+          <Stat marginTop="3vh">
             <StatLabel>Number of people who bid on at least one item</StatLabel>
-            <StatNumber>45</StatNumber>
+            <Flex
+              flexDirection="row" 
+              alignItems="baseline" 
+            >
+              <StatNumber>{totalBidMem}</StatNumber>
+              <p>/58</p>
+            </Flex>
+            
             <StatHelpText>
-              <StatArrow type="decrease" />
-              9.05%
+              <StatArrow type="increase" />
+              {parseFloat(totalBidMem/58 * 100).toFixed(2)}%
             </StatHelpText>
           </Stat>
         </Flex>

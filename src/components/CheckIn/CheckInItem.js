@@ -59,7 +59,7 @@ export default function CheckInItem({event, address, checkinEnable}) {
         <div className="check-in-info">
           <HStack>
             <h3>{event.eventName}</h3>
-            <Badge fontSize="1.6vh" colorScheme="red" className="point-box">
+            <Badge fontSize="1.6vh" colorScheme="blue" className="point-box">
               <SmallAddIcon/>{event.pointAmount} points
             </Badge>
           </HStack>

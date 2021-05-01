@@ -25,7 +25,7 @@ import web3 from "../ethereum/Web3";
 import KSEA_Auction from "../../abis/KSEAuction.json";
 import KseaToken from "../ethereum/KSEA_Token";
 
-export default function AuctionItem({address, item, exist}) {
+export default function AuctionItem({address, item, auctionDiff, exist}) {
   const [inputBid, setInputBid] = useState('');
   const [highestBid, setHighestBid] = useState(0);
   const [highestBidder, setHighestBidder] = useState('');
@@ -213,8 +213,17 @@ export default function AuctionItem({address, item, exist}) {
               <h2>Auction Address:</h2>
               <h2>{item.contractAddr}</h2>
               <h2>Auction Id: {item.aid}</h2>
-              <h2>Highest Bid: {highestBid} token(s)</h2>
-              <h2>Highest Bidder: {highestBidder} </h2>
+              {auctionDiff <= 1800000?
+                <>
+                  <h2>Highest Bid: 궁금하쥬?</h2>
+                  <h2>Highest Bidder: 궁금하쥬?</h2>
+                </>
+                :
+                <>
+                  <h2>Highest Bid: {highestBid} token(s)</h2>
+                  <h2>Highest Bidder: {highestBidder} </h2>
+                </>
+              }
               <h2>My Bid: {myBid} token(s)</h2>
                 <InputGroup>
                   <InputLeftAddon children="DOBBY"/>

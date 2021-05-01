@@ -161,7 +161,7 @@ export default function ManageCheckin({isBoard}) {
       
   return (
     <Stack spacing={5} className="create-new">
-      <h3>Add New Event</h3>
+      <h4>Add New Event</h4>
       <Input
         value={name}
         onChange={handleChange} 
@@ -208,7 +208,7 @@ export default function ManageCheckin({isBoard}) {
         Create Event
       </Button>
 
-      <h3>Delete Event</h3>
+      <h4>Delete Event</h4>
       <Input
         name="deleteEventId"
         value={deleteEventId}

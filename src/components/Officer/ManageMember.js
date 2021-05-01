@@ -89,7 +89,7 @@ export default function ManageMember({isBoard}) {
       
   return (
     <Stack spacing={5} className="create-new">
-      <h3>Add new member</h3>
+      <h4>Add New Member</h4>
       <Input
         name="name"
         value={name}
@@ -123,7 +123,7 @@ export default function ManageMember({isBoard}) {
       <Button onClick={handleAddMember} isDisabled={!isBoard} colorScheme="green">
         Add Member
       </Button>
-      <h3>Delete Member</h3>
+      <h4>Delete Member</h4>
       <Input
         name="deleteMemAddr"
         value={deleteMemAddr}
