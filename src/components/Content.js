@@ -112,7 +112,7 @@ export default function Content(props) {
                 <Route path="/checkin"><CheckIn address={address} /></Route>
                 <Route path="/ranking"><Ranking address={address} /></Route>
                 <Route path="/auction"><Auction address={address} /></Route>
-                <Route path="/restricted-officer-page"><Officer address={address}/></Route>
+                <Route path="/officer"><Officer address={address}/></Route>
                 <Route path="/profile"><Profile address={address} /></Route>
                 <Route path="/about-us" component={AboutUs}/>
                 <Route component={NotFound}/>

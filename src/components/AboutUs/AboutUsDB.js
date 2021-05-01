@@ -27,14 +27,16 @@ const AboutUsDB = [
     img: defaultImg,
     profile: "https://www.linkedin.com/in/hanjisu/",
     position1: "Project Lead",
-    boxColor1: "#56CBF9"
+    boxColor1: "#56CBF9",
+    position2: "Frontend Lead",
+    boxColor2: "#C3DBC5"
   },
   {
     english: "Brian Lee",
     korean: "이범진",
     img: "https://docs.google.com/uc?export=download&id=1TVrghcrVpXU9awmwfYH0PW3Zv50n7ZGl",
     profile: "https://www.linkedin.com/in/beomjinlee/",
-    position1: "Backend Engineer",
+    position1: "Backend Lead",
     boxColor1: "#C3DBC5"
   },
   {

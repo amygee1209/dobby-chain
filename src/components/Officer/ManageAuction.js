@@ -25,7 +25,7 @@ import axios from 'axios';
 
 export default function ManageAuction(
   {auctionName, auctionImg, auctionDuration, 
-    handleAuction, handleAuctionChange}
+    handleAuction, handleAuctionChange, isBoard}
     ) {
   const [deleteAuctionId, setDeleteAuctionId] = useState('');
   const [deleteAll, setDeleteAll] = useState(false);
@@ -150,7 +150,9 @@ export default function ManageAuction(
       </InputGroup>
       <Button 
         onClick={handleAuction} 
-        colorScheme="green">
+        isDisabled={!isBoard} 
+        colorScheme="green"
+      >
         Create Auction
       </Button>
 
@@ -175,7 +177,7 @@ export default function ManageAuction(
           isChecked={deleteAll}
         />
       </FormControl>
-      <Button onClick={handleDeleteAuction} colorScheme="red">
+      <Button onClick={handleDeleteAuction} isDisabled={!isBoard} colorScheme="red">
         Delete Auction
       </Button>
       <Modal isOpen={isOpen} onClose={handleClose}>

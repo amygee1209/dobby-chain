@@ -8,7 +8,7 @@ import {
 import './Officer.css';
 import axios from 'axios';
 
-export default function ManageMember() {
+export default function ManageMember({isBoard}) {
   //design
   const toast = useToast();
   const toastIdRef = React.useRef();
@@ -120,7 +120,7 @@ export default function ManageMember() {
         onChange={handleChange} 
         placeholder="metamask address"
       />
-      <Button onClick={handleAddMember} colorScheme="green">
+      <Button onClick={handleAddMember} isDisabled={!isBoard} colorScheme="green">
         Add Member
       </Button>
       <h3>Delete Member</h3>
@@ -130,7 +130,7 @@ export default function ManageMember() {
         onChange={handleChange} 
         placeholder="metamask address"
       />
-      <Button onClick={handleDeleteMember} colorScheme="red">
+      <Button onClick={handleDeleteMember} isDisabled={!isBoard} colorScheme="red">
         Delete Member
       </Button>
     </Stack>

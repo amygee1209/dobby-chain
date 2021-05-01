@@ -22,7 +22,7 @@ import { WarningTwoIcon } from '@chakra-ui/icons';
 import './Officer.css';
 import axios from 'axios';
 
-export default function ManageCheckin() {
+export default function ManageCheckin({isBoard}) {
   //design
   const toast = useToast();
   const toastIdRef = React.useRef();
@@ -201,8 +201,10 @@ export default function ManageCheckin() {
         <InputRightAddon children="min"  color="black" />
       </InputGroup>
       <Button 
-        onClick={handleSubmit} 
-        colorScheme="green">
+        onClick={handleSubmit}
+        isDisabled={!isBoard}  
+        colorScheme="green"
+      >
         Create Event
       </Button>
 
@@ -226,7 +228,7 @@ export default function ManageCheckin() {
           isChecked={deleteAll}
         />
       </FormControl>
-      <Button onClick={handleDeleteEvent} colorScheme="red">
+      <Button onClick={handleDeleteEvent} isDisabled={!isBoard} colorScheme="red">
         Delete Event
       </Button>
 

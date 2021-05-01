@@ -34,6 +34,7 @@ export default function Officer({address}) {
   const [token, setToken] = useState(undefined);
   const [factory, setFactory] = useState(undefined);
   const [boardValue, setBoardValue] = useState('');
+  const [isBoard, setIsBoard] = useState(false);
  
   //input token/ether
   const [inputToken, setInputToken] = useState('');
@@ -217,35 +218,59 @@ export default function Officer({address}) {
     });
   }
 
+  async function fetchBoardStatus(_address) {
+    if (airdrop && _address) {
+      let board = await airdrop.methods.isBoardMember(_address).call();
+      console.log("I am board member:" , board)
+      setIsBoard(board)
+    }
+  }
+
+
+  function showNotBoardError() {
+    toastIdRef.current = toast({
+      title: "Error",
+      description: "You are not a board member",
+      status: "error",
+      duration: 9000,
+      isClosable: true,
+    })
+  }
+
+  useEffect(() => {
+    fetchBoardStatus(address);
+  }, [address]);
+
   return airdrop && token? (
-    <Flex justifyContent="center" id='officer'>
+    <Flex flexDirection="column" alignItems="center" id='officer'>
+    <h1>You are {isBoard? null: "not"} a registered board member</h1>
     <Tabs isFitted variant="enclosed" style={{width: "70%"}}>
       <TabList>
-        <Tab><h1>Officer Management</h1></Tab>
-        <Tab><h1>Distribute Dobby</h1></Tab>
-        <Tab><h1>Distribute Ether</h1></Tab>
-        <Tab><h1>Auction</h1></Tab>
-        <Tab><h1>Checkin Event</h1></Tab>
-        <Tab><h1>Member Management</h1></Tab>
+        <Tab><h3>Officer Management</h3></Tab>
+        <Tab><h3>Distribute Dobby</h3></Tab>
+        <Tab><h3>Distribute Ether</h3></Tab>
+        <Tab><h3>Auction</h3></Tab>
+        <Tab><h3>Checkin Event</h3></Tab>
+        <Tab><h3>Member Management</h3></Tab>
       </TabList>
       <TabPanels>
         <TabPanel>
           <Stack spacing={5} className="create-new">
-            <h3>Register</h3>
+            <h4>Register</h4>
             <Input 
               onChange={handleBoardChange} 
               placeholder="officer metamask address"
             />
-            <Button onClick={handleRegister} colorScheme="green">
+            <Button onClick={handleRegister} isDisabled={!isBoard} colorScheme="green">
               Register Officer
             </Button>
 
-            <h3>Deregister</h3>
+            <h4>Deregister</h4>
             <Input 
               onChange={handleBoardChange} 
               placeholder="officer metamask address"
             />
-            <Button onClick={handleDeregister} colorScheme="red">
+            <Button onClick={handleDeregister} isDisabled={!isBoard} colorScheme="red">
               Deregister Officer
             </Button>
           </Stack>
@@ -260,7 +285,7 @@ export default function Officer({address}) {
                 onChange={handleDistributeChange} 
                 placeholder="event Id"
               />
-              <Button onClick={handleViewCheckedinMembers} colorScheme="green">
+              <Button onClick={handleViewCheckedinMembers} isDisabled={!isBoard} colorScheme="green">
                 View members
               </Button>
               {viewListofMembers.length > 0?
@@ -275,7 +300,7 @@ export default function Officer({address}) {
                 onChange={handleDistributeChange} 
                 placeholder="token amount"
               />
-              <Button onClick={handleDistributeToken} colorScheme="blue">
+              <Button onClick={handleDistributeToken} isDisabled={!isBoard} colorScheme="blue">
                 Distribute Dobby
               </Button>
             </Stack>
@@ -290,7 +315,7 @@ export default function Officer({address}) {
               onChange={handleDistributeChange} 
               placeholder="Ether amount"
             />
-            <Button onClick={handleDistributeEther} colorScheme="blue">
+            <Button onClick={handleDistributeEther} isDisabled={!isBoard} colorScheme="blue">
               Distribute Ether
             </Button>
           </Stack>
@@ -303,15 +328,16 @@ export default function Officer({address}) {
             auctionDuration = {auctionDuration}
             handleAuction = {handleAuction}
             handleAuctionChange = {handleAuctionChange}
+            isBoard={isBoard}
           />
         </TabPanel>
 
         <TabPanel>
-          <ManageCheckin />
+          <ManageCheckin isBoard={isBoard}/>
         </TabPanel>
 
         <TabPanel>
-          <ManageMember />
+          <ManageMember isBoard={isBoard}/>
         </TabPanel>
         
       </TabPanels>

@@ -67,26 +67,24 @@ export default function AuctionStat({auctionEndTime}) {
           </div>
         </Flex>
 
-        <Flex justifyContent="space-between" width="40%">
-          <StatGroup>
-            <Stat>
-              <StatLabel>Total Dobby spent</StatLabel>
-              <StatNumber>345,670</StatNumber>
-              <StatHelpText>
-                <StatArrow type="increase" />
-                23.36%
-              </StatHelpText>
-            </Stat>
+        <Flex flexDirection="column" justifyContent="space-between" width="40%">
+          <Stat>
+            <StatLabel>Total Dobby spent</StatLabel>
+            <StatNumber>345,670</StatNumber>
+            <StatHelpText>
+              <StatArrow type="increase" />
+              23.36%
+            </StatHelpText>
+          </Stat>
 
-            <Stat marginLeft="5vw">
-              <StatLabel>Number of people who bid on item</StatLabel>
-              <StatNumber>45</StatNumber>
-              <StatHelpText>
-                <StatArrow type="decrease" />
-                9.05%
-              </StatHelpText>
-            </Stat>
-          </StatGroup>
+          <Stat>
+            <StatLabel>Number of people who bid on at least one item</StatLabel>
+            <StatNumber>45</StatNumber>
+            <StatHelpText>
+              <StatArrow type="decrease" />
+              9.05%
+            </StatHelpText>
+          </Stat>
         </Flex>
       </div>
     </div>

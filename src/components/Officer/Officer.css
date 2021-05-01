@@ -6,7 +6,12 @@
   display: block;
 }
 #officer h1 {
-  font-size: 2vh;
+  font-size: 4vh;
+  font-weight: 500;
+  margin: 0 0 10vh;
+}
+#officer h3 {
+  font-size: 1vw;
   font-weight: 400;
   margin: 1vh 0;
 }

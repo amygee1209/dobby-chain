@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import kseAirdrop from '../ethereum/KSEAirdrop';
 import './Navbar.css';
 import { Link } from 'react-router-dom';
 import { 
@@ -22,7 +21,6 @@ import axios from 'axios';
 
 export default function Navbar({onboard, onboardState, themeBtn}) {
   const [name, setName] = useState(undefined);
-  const [isBoard, setIsBoard] = useState(false);
   let address = onboardState.address;
 
   async function readyToTransact() {
@@ -81,18 +79,8 @@ export default function Navbar({onboard, onboardState, themeBtn}) {
       })
     }
 
- async function fetchBoardStatus(_address) {
-    let airdrop = await kseAirdrop()
-    if (airdrop && _address) {
-      let board = await airdrop.methods.isBoardMember(_address).call();
-      console.log("I am board member:" , board)
-      setIsBoard(board)
-    }
-  }
-
   useEffect(() => {
-    fetchUser(address)
-    fetchBoardStatus(address);
+    fetchUser(address);
   }, [address]);
 
   return (
@@ -118,15 +106,8 @@ export default function Navbar({onboard, onboardState, themeBtn}) {
             <li className='nav-item'>
               <Link to="/auction" onClick={closeMenu} className='nav-links'>Auction</Link>
             </li>
-            {/* {isBoard?
-              <li className='nav-item'>
-                <Link to="/officer" onClick={closeMenu} className='nav-links'>Officer</Link>
-              </li>
-              :
-              null
-            } */}
             <li className='nav-item'>
-              <Link to="/restricted-officer-page" onClick={closeMenu} className='nav-links'>Officer</Link>
+              <Link to="/officer" onClick={closeMenu} className='nav-links'>Officer</Link>
             </li>
             <li className='nav-item'>
               <Link to="/profile" onClick={closeMenu} className='nav-links'>Profile</Link>
