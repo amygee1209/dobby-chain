@@ -6,7 +6,7 @@ const AboutUsDB = [
     korean: "김형근",
     img: defaultImg,
     profile: "https://www.linkedin.com/in/chriskim96/",
-    position1: "Product Manager",
+    position1: "Project Lead",
     boxColor1: "#56CBF9",
     position2: "Smart Contract Lead",
     boxColor2: "#E8DCB9"
@@ -16,7 +16,7 @@ const AboutUsDB = [
     korean: "김희수",
     img: defaultImg,
     profile: "https://www.linkedin.com/in/amy-hee-soo-kim/",
-    position1: "Product Manager",
+    position1: "Project Lead",
     boxColor1: "#56CBF9",
     position2: "Business Lead",
     boxColor2: "#F2CEE6"
@@ -26,8 +26,16 @@ const AboutUsDB = [
     korean: "한지수",
     img: defaultImg,
     profile: "https://www.linkedin.com/in/hanjisu/",
-    position1: "Product Manager",
+    position1: "Project Lead",
     boxColor1: "#56CBF9"
+  },
+  {
+    english: "Brian Lee",
+    korean: "이범진",
+    img: "https://docs.google.com/uc?export=download&id=1TVrghcrVpXU9awmwfYH0PW3Zv50n7ZGl",
+    profile: "https://www.linkedin.com/in/beomjinlee/",
+    position1: "Backend Engineer",
+    boxColor1: "#C3DBC5"
   },
   {
     english: "Amy Kwon",
@@ -38,11 +46,11 @@ const AboutUsDB = [
     boxColor1: "#C3DBC5"
   },
   {
-    english: "Brian Lee",
-    korean: "이범진",
-    img: "https://docs.google.com/uc?export=download&id=1TVrghcrVpXU9awmwfYH0PW3Zv50n7ZGl",
-    profile: "https://www.linkedin.com/in/beomjinlee/",
-    position1: "Backend Engineer",
+    english: "Sungyoon Kim",
+    korean: "김성윤",
+    img: defaultImg,
+    profile: '/',
+    position1: "Frontend Engineer",
     boxColor1: "#C3DBC5"
   },
   {
@@ -76,7 +84,7 @@ const AboutUsDB = [
     profile: '/',
     position1: "Business",
     boxColor1: "#F2CEE6"
-  },
+  }
 ]
   
 export default AboutUsDB;

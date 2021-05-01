@@ -11,6 +11,7 @@
   margin-top: 5vh;
   transition: all .2s ease-in-out;
   position: relative;
+  min-width: 180px;
 }
 .top1{
   background-color: rgb(255,215,0);
@@ -58,6 +59,7 @@
   margin-top: 5vh;
   transition: all .2s ease-in-out;
   line-height: 2;
+  min-width: 120px;
 }
 .rest-ranking:hover{
   transform: scale(1.1);

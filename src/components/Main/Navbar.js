@@ -46,7 +46,7 @@ export default function Navbar({onboard, onboardState, themeBtn}) {
           {name}
         </Button>
       </PopoverTrigger>
-      <PopoverContent>
+      <PopoverContent width="250px">
         <PopoverArrow />
         <PopoverCloseButton />
         <PopoverHeader>
@@ -54,7 +54,7 @@ export default function Navbar({onboard, onboardState, themeBtn}) {
         </PopoverHeader>
         <PopoverBody>
           <p>Need Help?</p>
-          <a href="https://metamask.io/" className="tutorial-link">
+          <a href="https://metamask.io/" className="tutorial-link"  target="_blank" rel="noopener noreferrer">
             Try this tutorial!
           </a>
         </PopoverBody>

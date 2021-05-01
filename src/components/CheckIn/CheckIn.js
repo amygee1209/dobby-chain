@@ -1,10 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import './CheckIn.css';
 import CheckInItem from './CheckInItem';
-import {
-  useToast,
-  CircularProgress
-} from "@chakra-ui/react";
+import { CircularProgress } from "@chakra-ui/react";
 import axios from 'axios';
 
 export default function CheckIn({address}) {

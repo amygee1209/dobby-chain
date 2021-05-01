@@ -13,9 +13,12 @@
   right: 17.5vw;
 }
 #footer-section h1 {
+  font-size: 2vh;
+  width: 20%;
   position: absolute;
   bottom: 4vw;
   right: 22.5vw;
+  text-align: right;
 }
 #footer-section .abtus-btn {
   position: absolute;
