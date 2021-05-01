@@ -14,7 +14,8 @@ import {
   InputLeftAddon,
   Input,
   Stack,
-  CircularProgress,
+  Alert,
+  AlertIcon,
   Flex
 } from "@chakra-ui/react"
 import { CheckIcon } from '@chakra-ui/icons'
@@ -24,6 +25,12 @@ import axios from 'axios';
 import web3 from "../ethereum/Web3";
 import KSEA_Auction from "../../abis/KSEAuction.json";
 import KseaToken from "../ethereum/KSEA_Token";
+import Notify from 'bnc-notify';
+
+const notify = Notify({
+  dappId: 'a26b3ed4-031c-40da-bbf7-cf3f1f0ee190',
+  networkId: 4
+});
 
 export default function AuctionItem({address, item, auctionDiff, exist}) {
   const [inputBid, setInputBid] = useState('');
@@ -31,6 +38,7 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
   const [highestBidder, setHighestBidder] = useState('');
   const [myBid, setMyBid] = useState('');
   const [bidStatus, setBidStatus] = useState(false);
+  const [bidDisable, setBidDisable] = useState(true);
   
   //design
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -69,7 +77,7 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
     //console.log(item.aid)
     axios.get(`https://dobchain-testing.herokuapp.com/auctionbid?aid=${item.aid}&address=${address}`)
       .then(res => {
-        console.log(res.data)
+        //console.log(res.data)
         setMyBid(res.data.myBid)
       })
       .catch(err => {
@@ -79,7 +87,7 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
 
   useEffect(() => {
     fetchItemInfo();
-  }, [item, address, bidStatus])
+  }, [item, address, bidStatus, inputBid])
 
 
   useEffect(() => {
@@ -103,29 +111,88 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
 
   //Auction Contract interacting functions 
   async function makeBid(_amount) {
-    await token.methods.approve(item.contractAddr, _amount).send({from:address});
+    await token.methods.approve(item.contractAddr, _amount).send({from:address})
+    .on("transactionHash", hash => {
+      notify.hash(hash);
+    })
+    .on('error', function(error, receipt) {
+      toastIdRef.current = toast({
+        title: "Error",
+        description: "Transaction Rejected",
+        status: "error",
+        duration: 10000,
+        isClosable: true,
+      })
+      setBidStatus(false);
+    });
+    
     await auction.methods.bid(_amount).send({from:address})
-    //let getMyBid = await auction.methods.getBid(address).call();
+     .on("transactionHash", hash => {
+      notify.hash(hash);
+    })
+    .on('error', function(error, receipt) {
+      toastIdRef.current = toast({
+        title: "Error",
+        description: "Transaction Rejected",
+        status: "error",
+        duration: 10000,
+        isClosable: true,
+      })
+      setBidStatus(false);
+    });
+    
     await getHighest().then(highest => {
       //Update highest bid and bidder
-      console.log(highest[0], highest[1])
+      console.log(highest[0], highest[1], highest[2])
       let highestForm = new FormData();
       highestForm.append('aid', item.aid); 
       highestForm.append('highestBid', highest[0]); 
       highestForm.append('highestBidder', highest[1]);
       axios.put(`https://dobchain-testing.herokuapp.com/auction`, highestForm)
+        .then(res => {
+          console.log(res.data.highestBidder)
+          updateMyBid(highest[2]);
+        })
+      });
+      console.log("my bid: ", myBid);
+      return true;
+  }
+    
+  function updateMyBid(updatedMyBid) {
+    console.log("My updated bid:", updatedMyBid)
+    let inputBidForm = new FormData();
+    inputBidForm.append('aid', item.aid); 
+    inputBidForm.append('inputBid', updatedMyBid);
+    inputBidForm.append('address', address);
+    axios.post(`https://dobchain-testing.herokuapp.com/auctionbid`, inputBidForm)
       .then(res => {
-        console.log(res.data.highestBidder)
+        console.log(res.data.statusDes)
       })
-    });
-    console.log("my bid: ", myBid);
-    return true;
   }
 
   async function getHighest() {
     let highestBid = await auction.methods.getHighestBid().call();
     let highestBidder = await auction.methods.getHighestBidder().call();
-    return [highestBid, highestBidder];
+    let mybid = await auction.methods.getBid(address).call();
+    if (typeof highestBid == "undefined") {
+      setTimeout(async () => {
+        highestBid = await auction.methods.getHighestBid().call();
+      }, 500);
+    }
+    if (typeof highestBidder == "undefined") {
+      setTimeout(async () => {
+        highestBidder = await auction.methods.getHighestBidder().call();
+      }, 500);
+    }
+    if (typeof mybid == "undefined") {
+      setTimeout(async () => {
+        mybid = await auction.methods.getBid(address).call();
+      }, 500);
+    }
+    if (typeof highestBid != "undefined" && typeof highestBidder != "undefined" && typeof mybid != "undefined") {
+      return [highestBid, highestBidder, mybid];
+    }
+    
   }
 
   function handleChange(e) {
@@ -144,46 +211,23 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
       handleClose();
 
     } else {
-      //Update my bid of the auction item
-      let inputBidForm = new FormData();
-      inputBidForm.append('aid', item.aid); 
-      inputBidForm.append('inputBid', inputBid);
-      inputBidForm.append('address', address);
-      axios.post(`https://dobchain-testing.herokuapp.com/auctionbid`, inputBidForm)
-      .then(res => {
-        //console.log(address)
-        //console.log(res.data)
-
-        if (res.data.status === "success") {
-          setBidStatus(true)
-          makeBid(inputBid)
-          .then(status => {
-            console.log(status)
-            if (status) {
-              toastIdRef.current = toast({
-                title: "Success",
-                description: "짝짝짝! 성공적으로 배팅하셨습니다!",
-                status: "success",
-                duration: 10000,
-                isClosable: true,
-              })
-              setBidStatus(false);
-            }
-          })
-        }
-
-        const dataStatus = res.data.status;
-        if (dataStatus === "error") {
+      setBidStatus(true)
+      makeBid(inputBid)
+      .then(status => {
+        console.log(status)
+        if (status) {
           toastIdRef.current = toast({
-            title: "Error",
-            description: res.data.statusDes,
-            status: dataStatus,
+            title: "Success",
+            description: "짝짝짝! 성공적으로 배팅하셨습니다!",
+            status: "success",
             duration: 10000,
             isClosable: true,
           })
+          setBidStatus(false);
+          handleClose();
+          //auto reload
+          window.location.reload();
         }
-        
-        handleClose();
       })
     }
   }
@@ -193,6 +237,33 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
     onClose();
   }
 
+  const fetchBidDisable = async () => {
+    console.log("fetch member info...")
+    const res = await axios
+      .get(`https://dobchain-testing.herokuapp.com/member?address=${address}`)
+      .catch((err) => {
+        console.log("Error:", err);
+      })
+    if (res) {
+      //console.log(res.data);
+      if (res.data.status === "success") {
+        setBidDisable(false)
+      } else {
+        toastIdRef.current = toast({
+          title: "Error",
+          description: res.data.status,
+          status: "error",
+          duration: 100000,
+          isClosable: true,
+        })
+      }
+    }
+  }
+
+  useEffect(() => {
+    fetchBidDisable();
+  }, [address])
+
   const designClass = `auction-item bidded-item-${exist}`
 
   return (
@@ -200,7 +271,6 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
 
       <img src={item.img} className="auction-item-img" alt="item img"/>
       <h1>{item.name}</h1>
-      <h2>{highestBidder}</h2>
 
       <Modal closeOnOverlayClick={false} size="xl" isOpen={isOpen} onClose={handleClose}>
         <ModalOverlay />
@@ -208,52 +278,72 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
           <ModalHeader>{item.name}</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <Stack spacing="2vh">
-              <img src={item.img} className="contractAddr-img" alt="item img"/>
-              <h2>Auction Address:</h2>
-              <h2>{item.contractAddr}</h2>
-              <h2>Auction Id: {item.aid}</h2>
-              {auctionDiff <= 1800000?
-                <>
-                  <h2>Highest Bid: 궁금하쥬?</h2>
-                  <h2>Highest Bidder: 궁금하쥬?</h2>
-                </>
-                :
-                <>
-                  <h2>Highest Bid: {highestBid} token(s)</h2>
-                  <h2>Highest Bidder: {highestBidder} </h2>
-                </>
-              }
-              <h2>My Bid: {myBid} token(s)</h2>
-                <InputGroup>
-                  <InputLeftAddon children="DOBBY"/>
-                  <Input 
-                    type="number"
-                    value={inputBid}
-                    placeholder="Your bid"
-                    variant="filled"
-                    onChange={handleChange}
-                    style={{fontSize: "3vh"}}
-                  />
-                </InputGroup>
-                {bidStatus?
-                  <Flex justifyContent="center">
-                    <CircularProgress isIndeterminate color="blue.300" />
-                  </Flex>
+            {auctionDiff <= 0?
+              <div>
+                <img src={item.img} className="contractAddr-img" alt="item img"/>
+                <h1>Congratulations!!!!!</h1>
+                <h1>{highestBidder}</h1>
+              </div>
+              :
+              <Stack spacing="2vh">
+                <img src={item.img} className="contractAddr-img" alt="item img"/>
+                <h2>Auction Address:</h2>
+                <h2>{item.contractAddr}</h2>
+                <h2>Auction Id: {item.aid}</h2>
+                {auctionDiff <= 1800000?
+                  <>
+                    <h2>Highest Bid: 궁금하쥬?</h2>
+                    <h2>Highest Bidder: 궁금하쥬?</h2>
+                  </>
                   :
-                  <Flex justifyContent="center">
-                    <Button 
-                      onClick={handleSubmit}
-                      rightIcon={<CheckIcon />} 
-                      colorScheme="blue" 
-                      variant="outline"
-                      className="btn"
-                    >
-                      Bid
-                    </Button>
-                  </Flex>
+                  <>
+                    <h2>Highest Bid: {highestBid} token(s)</h2>
+                    <h2>Highest Bidder: {highestBidder} </h2>
+                  </>
                 }
-            </Stack>
+                <h2>My Bid: {myBid} token(s)</h2>
+                  <InputGroup>
+                    <InputLeftAddon children="DOBBY"/>
+                    <Input 
+                      type="number"
+                      value={inputBid}
+                      placeholder="Your bid"
+                      variant="filled"
+                      onChange={handleChange}
+                      style={{fontSize: "3vh"}}
+                    />
+                  </InputGroup>
+                  {bidStatus?
+                    <Stack spacing={3}>
+                      <Button
+                        isLoading
+                        loadingText="Bidding in process"
+                        colorScheme="red"
+                        variant="outline"
+                      ></Button>
+                      <Alert status="error">
+                        <AlertIcon />
+                        INTERACTING WITH BLOCKCHAIN TAKES TIME
+                        <br/>
+                        PLEASE DO NOT TOUCH ANYTHING
+                      </Alert>
+                    </Stack>
+                    :
+                    <Flex justifyContent="center">
+                      <Button 
+                        onClick={handleSubmit}
+                        rightIcon={<CheckIcon />} 
+                        colorScheme="blue" 
+                        variant="outline"
+                        className="btn"
+                        isDisabled={bidDisable}
+                      >
+                        Bid
+                      </Button>
+                    </Flex>
+                  }
+              </Stack>
+            }
           </ModalBody>
 
           <ModalFooter>

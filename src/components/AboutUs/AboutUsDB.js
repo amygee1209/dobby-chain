@@ -80,7 +80,7 @@ const AboutUsDB = [
     boxColor1: "#F2CEE6"
   },
   {
-    english: "Seungtaek Oh",
+    english: "David Oh",
     korean: "오승택",
     img: "https://docs.google.com/uc?export=download&id=1ZanNQ0YD9rmMBkpUydM2lNeGR1EYwwkI",
     profile: '/',

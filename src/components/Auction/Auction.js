@@ -22,7 +22,7 @@ export default function Auction({address}) {
   const dueDateTime = new Date(due);
   const diff = +dueDateTime - +new Date();
 
-  const auctionEndTime = new Date('05-31-2021 20:00:00')
+  const auctionEndTime = new Date('06-01-2021 05:30:00')
   const auctionDiff = +auctionEndTime - +new Date();
   // const thirty = +new Date('04-30-2021 20:30:00') - +new Date('04-30-2021 20:00:00')
   // console.log(thirty)

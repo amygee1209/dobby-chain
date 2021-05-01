@@ -44,7 +44,11 @@ export default function CheckInItem({event, address, checkinEnable}) {
         duration: 10000,
         isClosable: true,
       })
-      handleClose();
+      if (dataStatus === "success") {
+        handleClose();
+        window.location.reload();
+      }
+      
     })
   }
 

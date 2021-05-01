@@ -17,7 +17,8 @@ import {
 import { 
   EmailIcon,
   ChatIcon,
-  DeleteIcon
+  DeleteIcon,
+  InfoOutlineIcon
 } from '@chakra-ui/icons';
 
 export default function MyRank({user, rankingSel}) {
@@ -65,6 +66,9 @@ export default function MyRank({user, rankingSel}) {
             <div className="display-email">
               <EmailIcon/> {user.email}
             </div>
+            <div className="display-email">
+              <InfoOutlineIcon/> {user.address}
+            </div>
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -76,7 +80,6 @@ export default function MyRank({user, rankingSel}) {
                   <ChatIcon/>
                 </HStack>
               </Stack>
-              {comments}
             </Stack>
           </ModalBody>
           <ModalFooter>

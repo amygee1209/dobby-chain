@@ -58,8 +58,10 @@ export default function Content(props) {
   function changeTheme() {
     if (props.theme === "light") {
       props.setTheme("dark");
+      window.localStorage.setItem('theme', "dark");
     } else {
       props.setTheme("light");
+      window.localStorage.setItem('theme', "light");
     }
   };
 
@@ -89,6 +91,10 @@ export default function Content(props) {
 
     setOnboard(ob);
     // console.log("Address:" + address);
+    let prevTheme = window.localStorage.getItem('theme');
+    if (prevTheme) {
+      props.setTheme(prevTheme);
+    }
     
   }, []);
 

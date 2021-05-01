@@ -22,6 +22,7 @@ const themes = {
 
 
 export default function App() {
+  //dark & light
   const [theme, setTheme] = useState("light");
 
   return (
