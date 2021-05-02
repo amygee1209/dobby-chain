@@ -276,9 +276,9 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
               :
               <Stack spacing="2vh">
                 <img src={item.img} className="contractAddr-img" alt="item img"/>
-                <h2>Auction Address:</h2>
-                <h2>{item.contractAddr}</h2>
-                <h2>Auction Id: {item.aid}</h2>
+                {/* <h2>Auction Address:</h2>
+                <h2>{item.contractAddr}</h2> */}
+                <h2>Auction ID: {item.aid}</h2>
                 {auctionDiff <= 1800000?
                   <>
                     <h2>Highest Bid: 궁금하쥬?</h2>
