@@ -16,6 +16,13 @@ import ManageAuction from './ManageAuction';
 import ManageCheckin from './ManageCheckin';
 import ManageMember from './ManageMember';
 
+import Notify from 'bnc-notify';
+
+const notify = Notify({
+  dappId: 'a26b3ed4-031c-40da-bbf7-cf3f1f0ee190',
+  networkId: 4
+});
+
 export default function Officer({address}) {
   //design
   const toast = useToast()
@@ -27,7 +34,7 @@ export default function Officer({address}) {
   // New auction item info
   const [auctionImg, setAuctionImg] = useState('');
   const [auctionName, setAuctionName] = useState('');
-  const [auctionDuration, setAuctionDuration] = useState('');
+  const [auctionDuration, setAuctionDuration] = useState(0);
 
   // blockchain related
   const [airdrop, setAirdrop] = useState(undefined);
@@ -79,12 +86,36 @@ export default function Officer({address}) {
   //KSEAirdrop Smart contract function calls. These functions will interact with the deployed smart contracts.
   async function registerBoardMem(_address) {
     await airdrop.methods.registerBoardMember(_address).send({from:address})
+    .on("transactionHash", hash => {
+      notify.hash(hash);
+    })
+    .on('error', function(error, receipt) {
+      toastIdRef.current = toast({
+        title: "Error",
+        description: "Transaction Rejected",
+        status: "error",
+        duration: 10000,
+        isClosable: true,
+      })
+    });
     let board = await airdrop.methods.isBoardMember(_address).call();
     console.log("IsBoardMember: ", board);
   }
 
   async function deregisterBoardMem(_address) {
     await airdrop.methods.deregisterBoardMember(_address).send({from:address})
+    .on("transactionHash", hash => {
+      notify.hash(hash);
+    })
+    .on('error', function(error, receipt) {
+      toastIdRef.current = toast({
+        title: "Error",
+        description: "Transaction Rejected",
+        status: "error",
+        duration: 10000,
+        isClosable: true,
+      })
+    });
     let board = await airdrop.methods.isBoardMember(_address).call();
     console.log("IsBoardMember: ", board);
   }
@@ -117,8 +148,32 @@ export default function Officer({address}) {
 
   async function distributeDobbyTokens(_addresses, _value) {
     let total_val = _value * _addresses.length
-    await token.methods.approve(airdrop._address, total_val).send({from:address});
+    await token.methods.approve(airdrop._address, total_val).send({from:address})
+    .on("transactionHash", hash => {
+      notify.hash(hash);
+    })
+    .on('error', function(error, receipt) {
+      toastIdRef.current = toast({
+        title: "Error",
+        description: "Transaction Rejected",
+        status: "error",
+        duration: 10000,
+        isClosable: true,
+      })
+    });
     await airdrop.methods.distributeDobbyTokens(_addresses, _value).send({from:address})
+    .on("transactionHash", hash => {
+      notify.hash(hash);
+    })
+    .on('error', function(error, receipt) {
+      toastIdRef.current = toast({
+        title: "Error",
+        description: "Transaction Rejected",
+        status: "error",
+        duration: 10000,
+        isClosable: true,
+      })
+    });
     //console.log(total_val)
     setEventId('')
     setInputToken('')
@@ -151,6 +206,18 @@ export default function Officer({address}) {
     let _ether = _value * 1e18
     let total_val = _ether * _addresses.length
     await airdrop.methods.distributeEther(_addresses).send({from:address, value:total_val})
+    .on("transactionHash", hash => {
+      notify.hash(hash);
+    })
+    .on('error', function(error, receipt) {
+      toastIdRef.current = toast({
+        title: "Error",
+        description: "Transaction Rejected",
+        status: "error",
+        duration: 10000,
+        isClosable: true,
+      })
+    });
     setInputEther('')
     //console.log(total_val)
   }
@@ -189,8 +256,6 @@ export default function Officer({address}) {
       setAuctionName(value);
     } else if (name === "auctionImg") {
       setAuctionImg(value)
-    } else {
-      setAuctionDuration(value);
     }
   }
 
@@ -200,7 +265,19 @@ export default function Officer({address}) {
   }
 
   async function createAuction(name, tokenAddr) {
-    await factory.methods.createAuction(name, tokenAddr).send({from:address});
+    await factory.methods.createAuction(name, tokenAddr).send({from:address})
+    .on("transactionHash", hash => {
+      notify.hash(hash);
+    })
+    .on('error', function(error, receipt) {
+      toastIdRef.current = toast({
+        title: "Error",
+        description: "Transaction Rejected",
+        status: "error",
+        duration: 10000,
+        isClosable: true,
+      })
+    });
     await factory.methods.getAuctionAddr(name).call().then(auctionAddr => {
       let formData = new FormData();
       formData.append('name', auctionName); 

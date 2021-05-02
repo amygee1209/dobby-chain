@@ -138,7 +138,7 @@ export default function ManageAuction(
           placeholder="auction img link"
         />
       </Stack>
-      <InputGroup>
+      {/* <InputGroup>
         <Input
           name="auctionDuration" 
           type="number"
@@ -147,7 +147,7 @@ export default function ManageAuction(
           placeholder="auction duration"
         />
         <InputRightAddon children="hour" color="black" />
-      </InputGroup>
+      </InputGroup> */}
       <Button 
         onClick={handleAuction} 
         isDisabled={!isBoard} 

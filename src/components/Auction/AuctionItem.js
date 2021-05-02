@@ -89,12 +89,6 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
     fetchItemInfo();
   }, [item, address, bidStatus, inputBid])
 
-
-  useEffect(() => {
-    console.log("highest bid: " + highestBid);
-    console.log("highest Bidder" + highestBidder);
-  }, [highestBid, highestBidder])
-
   const kseAuction = async () => {
     if(item.contractAddr) {
     const auction = new web3.eth.Contract(KSEA_Auction.abi, item.contractAddr)
@@ -143,30 +137,41 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
     
     await getHighest().then(highest => {
       //Update highest bid and bidder
-      console.log(highest[0], highest[1], highest[2])
+      // console.log("bid info: ", highest[0], highest[1], highest[2])
       let highestForm = new FormData();
       highestForm.append('aid', item.aid); 
       highestForm.append('highestBid', highest[0]); 
       highestForm.append('highestBidder', highest[1]);
       axios.put(`https://dobchain-testing.herokuapp.com/auction`, highestForm)
         .then(res => {
-          console.log(res.data.highestBidder)
+          // console.log(res.data.highestBidder)
           updateMyBid(highest[2]);
         })
       });
-      console.log("my bid: ", myBid);
-      return true;
   }
     
   function updateMyBid(updatedMyBid) {
-    console.log("My updated bid:", updatedMyBid)
+    // console.log("My updated bid:", updatedMyBid)
     let inputBidForm = new FormData();
     inputBidForm.append('aid', item.aid); 
     inputBidForm.append('inputBid', updatedMyBid);
     inputBidForm.append('address', address);
     axios.post(`https://dobchain-testing.herokuapp.com/auctionbid`, inputBidForm)
-      .then(res => {
-        console.log(res.data.statusDes)
+      .then(status => {
+        console.log(status)
+        if (status) {
+          toastIdRef.current = toast({
+            title: "Success",
+            description: "배팅 성공! 묻고 더블로 가!",
+            status: "success",
+            duration: 10000,
+            isClosable: true,
+          })
+          setBidStatus(false);
+          handleClose();
+          //auto reload
+          window.location.reload();
+        }
       })
   }
 
@@ -203,32 +208,16 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
     if (!inputBid || inputBid <= 0) {
       toastIdRef.current = toast({
         title: "Error",
-        description: "너같으면 그게 배팅이 되겠냐? ㅡ.ㅡ",
+        description: "[아귀]동작 그만. 밑장빼기냐? ㅡ.ㅡ",
         status: "error",
         duration: 10000,
         isClosable: true,
       })
-      handleClose();
+      // handleClose();
 
     } else {
       setBidStatus(true)
       makeBid(inputBid)
-      .then(status => {
-        console.log(status)
-        if (status) {
-          toastIdRef.current = toast({
-            title: "Success",
-            description: "짝짝짝! 성공적으로 배팅하셨습니다!",
-            status: "success",
-            duration: 10000,
-            isClosable: true,
-          })
-          setBidStatus(false);
-          handleClose();
-          //auto reload
-          window.location.reload();
-        }
-      })
     }
   }
 
@@ -323,9 +312,11 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
                       ></Button>
                       <Alert status="error">
                         <AlertIcon />
-                        INTERACTING WITH BLOCKCHAIN TAKES TIME
+                        YOU WILL SEE TWO METAMASK POPUPS
                         <br/>
-                        PLEASE DO NOT TOUCH ANYTHING
+                        PLEASE FOLLOW THE INSTRUCTIONS ON METAMASK
+                        <br/>
+                        MUST WAIT UNTIL PAGE AUTOMATICALLY RELOADS!
                       </Alert>
                     </Stack>
                     :
