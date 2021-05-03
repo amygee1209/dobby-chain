@@ -1,10 +1,6 @@
 import React, {useState} from 'react';
 import {
-  Button, 
-  Input,
-  Stack,
-  InputRightAddon,
-  InputGroup,
+  Button, Input, Stack,
   Switch,
   FormControl,
   FormLabel,
@@ -17,15 +13,16 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-  Kbd
+  Kbd, Alert, AlertIcon,
+  InputGroup, InputLeftAddon
 } from "@chakra-ui/react";
 import { WarningTwoIcon } from '@chakra-ui/icons';
 import './Officer.css';
 import axios from 'axios';
 
 export default function ManageAuction(
-  {auctionName, auctionImg, auctionDuration, 
-    handleAuction, handleAuctionChange, isBoard}
+  {auctionName, auctionImg, auctionPrice, 
+    handleAuction, handleAuctionChange, isBoard, createStatus}
     ) {
   const [deleteAuctionId, setDeleteAuctionId] = useState('');
   const [deleteAll, setDeleteAll] = useState(false);
@@ -128,33 +125,53 @@ export default function ManageAuction(
         name="auctionName" 
         value={auctionName}
         onChange={handleAuctionChange} 
-        placeholder="auction name"
+        placeholder="auction item name"
       />
       <Stack spacing={2}>
         <Input
           name="auctionImg"
           value={auctionImg}
           onChange={handleAuctionChange} 
-          placeholder="auction img link"
+          placeholder="auction item img link"
         />
       </Stack>
-      {/* <InputGroup>
+      <InputGroup>
+        <InputLeftAddon children="$" color="black" />
         <Input
-          name="auctionDuration" 
+          name="auctionPrice" 
           type="number"
-          value={auctionDuration}
+          value={auctionPrice}
           onChange={handleAuctionChange} 
-          placeholder="auction duration"
+          placeholder="auction item price"
         />
-        <InputRightAddon children="hour" color="black" />
-      </InputGroup> */}
-      <Button 
-        onClick={handleAuction} 
-        isDisabled={!isBoard} 
-        colorScheme="green"
-      >
-        Create Auction
-      </Button>
+      </InputGroup>
+
+      {createStatus?
+        <Stack spacing={3}>
+          <Button
+            isLoading
+            loadingText="Creating Auction..."
+            colorScheme="red"
+            variant="outline"
+          ></Button>
+          <Alert status="error">
+            <AlertIcon />
+            YOU WILL SEE ONE METAMASK POPUP
+            <br/>
+            PLEASE FOLLOW THE INSTRUCTIONS ON METAMASK
+            <br/>
+            WAIT UNTIL "AUCTION CREATED" MESSAGE!
+          </Alert>
+        </Stack>
+        :
+        <Button 
+            onClick={handleAuction}
+            colorScheme="green"
+            isDisabled={!isBoard} 
+          >
+            Create Auction
+          </Button>
+      }
 
       <h4>Delete Auction</h4>
       <Input

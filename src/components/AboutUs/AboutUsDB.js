@@ -4,7 +4,7 @@ const AboutUsDB = [
   {
     english: "Chris Kim",
     korean: "김형근",
-    img: defaultImg,
+    img: "https://docs.google.com/uc?export=download&id=1c-Jj0MA6YC-fe4XDqKY9U4LmUCDeEzfR",
     profile: "https://www.linkedin.com/in/chriskim96/",
     position1: "Project Lead",
     boxColor1: "#56CBF9",
@@ -14,7 +14,7 @@ const AboutUsDB = [
   {
     english: "Amy Kim",
     korean: "김희수",
-    img: defaultImg,
+    img: "https://docs.google.com/uc?export=download&id=13gHu3Gp4bpJcWiSIeQICQ37qv9MXkLsb",
     profile: "https://www.linkedin.com/in/amy-hee-soo-kim/",
     position1: "Project Lead",
     boxColor1: "#56CBF9",

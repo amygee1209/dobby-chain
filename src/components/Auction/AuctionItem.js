@@ -12,11 +12,10 @@ import {
   useToast,
   InputGroup,
   InputLeftAddon,
-  Input,
-  Stack,
-  Alert,
-  AlertIcon,
-  Flex
+  Input, Stack,
+  Alert, AlertIcon, AlertTitle, AlertDescription,
+  Flex, Box,
+  CloseButton
 } from "@chakra-ui/react"
 import { CheckIcon } from '@chakra-ui/icons'
 import './AuctionItem.css';
@@ -279,6 +278,7 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
                 {/* <h2>Auction Address:</h2>
                 <h2>{item.contractAddr}</h2> */}
                 <h2>Auction ID: {item.aid}</h2>
+                <h2>Auction Price: ${item.price}</h2>
                 {auctionDiff <= 1800000?
                   <>
                     <h2>Highest Bid: 궁금하쥬?</h2>
@@ -286,11 +286,11 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
                   </>
                   :
                   <>
-                    <h2>Highest Bid: {highestBid} token(s)</h2>
+                    <h2>Highest Bid: {highestBid} DOBBY</h2>
                     <h2>Highest Bidder: {highestBidder} </h2>
                   </>
                 }
-                <h2>My Bid: {myBid} token(s)</h2>
+                <h2>My Bid: {myBid} DOBBY</h2>
                   <InputGroup>
                     <InputLeftAddon children="DOBBY"/>
                     <Input 
@@ -312,11 +312,17 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
                       ></Button>
                       <Alert status="error">
                         <AlertIcon />
-                        YOU WILL SEE TWO METAMASK POPUPS
-                        <br/>
-                        PLEASE FOLLOW THE INSTRUCTIONS ON METAMASK
-                        <br/>
-                        MUST WAIT UNTIL PAGE AUTOMATICALLY RELOADS!
+                        <Box flex="1">
+                          <AlertTitle>Warning!</AlertTitle>
+                          <AlertDescription display="block">
+                            You will see TWO metamask popups
+                            <br/>
+                            Please follow the instructions on metamask
+                            <br/>
+                            MUST WAIT UNTIL PAGE AUTOMATICALLY RELOADS!
+                          </AlertDescription>
+                        </Box>
+                        <CloseButton position="absolute" right="8px" top="8px" />
                       </Alert>
                     </Stack>
                     :

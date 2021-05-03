@@ -8,7 +8,10 @@ import axios from 'axios';
 import {
   Button, Input, Stack, Flex,
   useToast,
-  Tabs, TabList, TabPanels, Tab, TabPanel
+  Tabs, TabList, TabPanels, Tab, TabPanel,
+  Alert, AlertIcon, AlertTitle, AlertDescription,
+  Box,
+  CloseButton
 } from "@chakra-ui/react";
 
 //Import officer components
@@ -30,11 +33,12 @@ export default function Officer({address}) {
 
   // Event id
   const [eventId, setEventId] = useState('');
+  const [eventPoint, setEventPoint] = useState(0);
 
   // New auction item info
   const [auctionImg, setAuctionImg] = useState('');
   const [auctionName, setAuctionName] = useState('');
-  const [auctionDuration, setAuctionDuration] = useState(0);
+  const [auctionPrice, setAuctionPrice] = useState('');
 
   // blockchain related
   const [airdrop, setAirdrop] = useState(undefined);
@@ -42,10 +46,13 @@ export default function Officer({address}) {
   const [factory, setFactory] = useState(undefined);
   const [boardValue, setBoardValue] = useState('');
   const [isBoard, setIsBoard] = useState(false);
+  const [createStatus, setCreateStatus] = useState(false);
  
-  //input token/ether
+  // distribute token/ether
   const [inputToken, setInputToken] = useState('');
   const [inputEther, setInputEther] = useState('');
+  const [distDobbyStatus, setDistDobbyStatus] = useState(false);
+  const [distEtherStatus, setDistEtherStatus] = useState(false);
 
   //list of members
   const [listOfMembers, setListOfMembers] = useState([]);
@@ -124,21 +131,44 @@ export default function Officer({address}) {
   // Distribute Token
   const fetchCheckedinMembers = async () => {
     console.log("fetching checked in members...")
-    const res = await axios
-      .get(`https://dobchain-testing.herokuapp.com/checkedinMembers?eventId=${eventId}`)
+    await axios.get(`https://dobchain-testing.herokuapp.com/checkedinMembers?eventId=${eventId}`)
+      .then(res => {
+        console.log(res.data)
+        setListOfMembers(res.data.addresses)
+        setListOfMembersNames(res.data.names)
+        fetchEventPoints();
+      })
       .catch(err => {
         console.log("Error:", err)
       })
-    
-    if(res) {
-      console.log(res.data)
-      setListOfMembers(res.data.addresses)
-      setListOfMembersNames(res.data.names)
-    }
+  }
+
+  const fetchEventPoints = async () => {
+    console.log("fetching points for the event...")
+    axios.get(`https://dobchain-testing.herokuapp.com/event?eventId=${eventId}`)
+      .then(res => {
+        console.log(res.data)
+        const dataStatus = res.data.status
+        if (dataStatus === "success") {
+          setEventPoint(res.data.eventInfo.pointAmount)
+        } else {
+          toastIdRef.current = toast({
+            title: "Error",
+            description: res.data.statusDes,
+            status: "error",
+            duration: 10000,
+            isClosable: true,
+          })
+        }
+      })
+      .catch(err => {
+        console.log("Error:", err)
+      })
   }
 
   function handleDistributeToken(event) {
     event.preventDefault();
+    setDistDobbyStatus(true);
     if (listOfMembers.length < 1) {
       toastIdRef.current = toast({ description: `Must view members`})
       return;
@@ -177,6 +207,8 @@ export default function Officer({address}) {
     //console.log(total_val)
     setEventId('')
     setInputToken('')
+    setDistDobbyStatus(false);
+    window.location.reload();
   }
 
   function handleDistributeChange(event) {
@@ -218,7 +250,9 @@ export default function Officer({address}) {
         isClosable: true,
       })
     });
-    setInputEther('')
+    setInputEther('');
+    setDistEtherStatus(false);
+    window.location.reload();
     //console.log(total_val)
   }
 
@@ -240,6 +274,7 @@ export default function Officer({address}) {
 
   function handleDistributeEther(event) {
     event.preventDefault();
+    setDistEtherStatus(true);
     distributeEtherToMembers();
   }
 
@@ -256,11 +291,14 @@ export default function Officer({address}) {
       setAuctionName(value);
     } else if (name === "auctionImg") {
       setAuctionImg(value)
+    }  else if (name === "auctionPrice") {
+      setAuctionPrice(value)
     }
   }
 
   async function handleAuction(event) {
     event.preventDefault();
+    setCreateStatus(true)
     await createAuction(auctionName, "0x692B98Fa3971Eed67d66DFB41B662667627A310a");
   }
 
@@ -283,14 +321,15 @@ export default function Officer({address}) {
       formData.append('name', auctionName); 
       formData.append('img', auctionImg); 
       formData.append('contractAddr', auctionAddr); 
-      formData.append('duration', auctionDuration); 
+      formData.append('price', auctionPrice); 
       axios.post(`https://dobchain-testing.herokuapp.com/auction`, formData)
         .then(res => { 
           console.log(res.data.status)
           toastIdRef.current = toast({ description: `Auction ${name} created`})
           setAuctionImg('');
           setAuctionName('');
-          setAuctionDuration('');
+          setAuctionPrice('');
+          setCreateStatus(false);
         })
     });
   }
@@ -356,8 +395,9 @@ export default function Officer({address}) {
                 placeholder="event Id"
               />
               <Button onClick={handleViewCheckedinMembers} isDisabled={!isBoard} colorScheme="green">
-                View members
+                View Event Details
               </Button>
+              <p># Dobbies to distribute: {eventPoint * 10}</p>
               {viewListofMembers.length > 0?
                 <div>List of members: {viewListofMembers}</div>
                 :
@@ -370,9 +410,38 @@ export default function Officer({address}) {
                 onChange={handleDistributeChange} 
                 placeholder="token amount"
               />
-              <Button onClick={handleDistributeToken} isDisabled={!isBoard} colorScheme="blue">
-                Distribute Dobby
-              </Button>
+              {distDobbyStatus?
+                <Stack spacing={3}>
+                  <Button
+                    isLoading
+                    loadingText="Dobby Distribution in process"
+                    colorScheme="red"
+                    variant="outline"
+                  ></Button>
+                  <Alert status="error">
+                    <AlertIcon />
+                    <Box flex="1">
+                      <AlertTitle>Warning!</AlertTitle>
+                      <AlertDescription display="block">
+                        You will see TWO metamask popups
+                        <br/>
+                        Please follow the instructions on metamask
+                        <br/>
+                        MUST WAIT UNTIL PAGE AUTOMATICALLY RELOADS!
+                      </AlertDescription>
+                    </Box>
+                    <CloseButton position="absolute" right="8px" top="8px" />
+                  </Alert>
+                </Stack>
+                :
+                <Button 
+                  onClick={handleDistributeToken}
+                  colorScheme="blue"
+                  isDisabled={!isBoard}
+                >
+                  Distribute Dobby
+                </Button>
+              }
             </Stack>
         </TabPanel>
 
@@ -385,9 +454,38 @@ export default function Officer({address}) {
               onChange={handleDistributeChange} 
               placeholder="Ether amount"
             />
-            <Button onClick={handleDistributeEther} isDisabled={!isBoard} colorScheme="blue">
-              Distribute Ether
-            </Button>
+            {distEtherStatus?
+              <Stack spacing={3}>
+                <Button
+                  isLoading
+                  loadingText="Ether Distribution in process"
+                  colorScheme="red"
+                  variant="outline"
+                ></Button>
+                <Alert status="error">
+                  <AlertIcon />
+                  <Box flex="1">
+                    <AlertTitle>Warning!</AlertTitle>
+                    <AlertDescription display="block">
+                      You will see one metamask popup
+                      <br/>
+                      Please follow the instructions on metamask
+                      <br/>
+                      MUST WAIT UNTIL PAGE AUTOMATICALLY RELOADS!
+                    </AlertDescription>
+                  </Box>
+                  <CloseButton position="absolute" right="8px" top="8px" />
+                </Alert>
+              </Stack>
+              :
+              <Button 
+                onClick={handleDistributeEther}
+                colorScheme="blue"
+                isDisabled={!isBoard}
+              >
+                Distribute Ether
+              </Button>
+            }
           </Stack>
         </TabPanel>
 
@@ -395,10 +493,11 @@ export default function Officer({address}) {
           <ManageAuction
             auctionName = {auctionName}
             auctionImg = {auctionImg}
-            auctionDuration = {auctionDuration}
+            auctionPrice = {auctionPrice}
             handleAuction = {handleAuction}
             handleAuctionChange = {handleAuctionChange}
             isBoard={isBoard}
+            createStatus={createStatus}
           />
         </TabPanel>
 

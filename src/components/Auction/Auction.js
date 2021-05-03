@@ -36,8 +36,10 @@ export default function Auction({address}) {
         console.log("Error:", err)
       })
     if(res) {
-      console.log(res.data)
-      setAuctions(res.data);
+      console.log(res.data);
+      const sorted = res.data.sort((a, b) => a.aid - b.aid);
+      // sort auction items by
+      setAuctions(sorted);
     }
     fetchMyAuctionBids();
   }
