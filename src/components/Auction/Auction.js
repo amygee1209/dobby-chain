@@ -18,14 +18,15 @@ export default function Auction({address}) {
   const [totalBid, setTotalBid] = useState('');
   const [totalBidMem, setTotalBidMem] = useState('');
 
-  const due = '04-29-2021 00:00:00';
+  // auction start datetime
+  const due = '05-05-2021 08:00:00';
   const dueDateTime = new Date(due);
   const diff = +dueDateTime - +new Date();
 
-  const auctionEndTime = new Date('06-01-2021 05:30:00')
+  // auction end datetime
+  const auctionEndTime = new Date('05-06-2021 08:00:00')
   const auctionDiff = +auctionEndTime - +new Date();
-  // const thirty = +new Date('04-30-2021 20:30:00') - +new Date('04-30-2021 20:00:00')
-  // console.log(thirty)
+
 
   const fetchAllAuctions = async () => {
     //Fetch all auctions

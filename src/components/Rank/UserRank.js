@@ -26,21 +26,6 @@ export default function MyRank({user, rankingSel}) {
     "rest-ranking" : `top3-ranking top${rankingSel}`
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const comments = <Stack spacing="20px">
-    <div>
-      <p>user1</p>
-      <Flex justifyContent="space-between">
-        <p>Hahahahhahahahahahhahahahahah</p>
-      </Flex>
-    </div>
-    <div>
-      <p>user2</p>
-      <Flex justifyContent="space-between">
-        <p>Hohohohohohohohooh</p>
-        <DeleteIcon/>
-      </Flex>
-    </div>
-  </Stack>
     
   return(
     <>
@@ -79,6 +64,7 @@ export default function MyRank({user, rankingSel}) {
                   <Input placeholder="comment" size="sm" />
                   <ChatIcon/>
                 </HStack>
+                Commenting service COMING SOON!
               </Stack>
             </Stack>
           </ModalBody>
