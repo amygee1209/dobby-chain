@@ -10,7 +10,7 @@ const LightTheme = {
 };
 
 const DarkTheme = {
-  pageBackground: "#151144",
+  pageBackground: "#0b0d26",
   iconColor: "#FF7F50",
   textColor: "lavender"
 }

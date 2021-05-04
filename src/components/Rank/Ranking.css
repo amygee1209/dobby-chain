@@ -14,27 +14,26 @@
   margin-bottom: 2vh;
   text-align: center;
 }
-#ranking .my-ranking p {
-  color: black;
-}
 #ranking .my-ranking-box {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  background-color: rgb(189, 240, 241);
-  border-radius: 30px;
+  border: 1.3px #69b0d1 solid;
+  background-color: white;
+  color: black;
+  border-radius: 20px;
   padding: 2vh 5vh;
   margin: 2vh 0 10vh;
 }
 #ranking h1{
-  font-size: 4vh;
+  font-size: 4vw;
   font-weight: 500;
   margin: 0 0 6vh;
+  font-family: 'Courier New', Courier, monospace;
 }
 #ranking .my-ranking p{
   font-size: 2.5vh;
-  margin: 0 0 2vh;
   font-weight: 500;
 }
 #ranking .my-ranking-box img {

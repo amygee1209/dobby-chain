@@ -28,9 +28,6 @@
   width: 140px;
   height: 140px;
   object-fit: cover;
-  opacity: 0.7;
-}
-#member-about img:hover {
   opacity: 1;
 }
 #member-about h3 {

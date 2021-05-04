@@ -12,7 +12,7 @@ export default function AboutUs() {
 
   return(
     <Stack id="about-us" spacing="50px">
-      <Stack id="about-us" spacing="24px">
+      {/* <Stack id="about-us" spacing="24px">
         <h1>Dobby Story</h1>
         <div>
           <p>what is this website about?</p>
@@ -23,7 +23,7 @@ export default function AboutUs() {
           <p>옥션 하고</p>
           <p>프로필 편집하고</p>
         </div>
-      </Stack>
+      </Stack> */}
       <Stack id="about-us" spacing="24px">
         <h1>Team</h1>
         <div id="about-us-teams">

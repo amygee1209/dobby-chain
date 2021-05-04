@@ -66,31 +66,9 @@ export default function Ranking({address}) {
 
   return (
     <div id="ranking">
-      <div className="my-ranking">
-        <h1>My rank</h1>
-        <div className="my-ranking-box">
-          {!user ?
-            <h3>Please connect your wallet</h3>
-            :
-            <>
-              {!user.img?
-                <p>{user.name}</p>
-                :
-                <>
-                  <img src={user.img} id="my-img" alt="headshot"/>
-                  <p>Rank #{myRank}</p>
-                  <p>{user.name}</p>
-                  <p>{user.num_points} points</p>
-                </>
-              }
-            </>
-          }
-        </div>
-      </div>
-
       {loading ?
         <div>
-          <h1>Hall of Fame</h1>
+          <h1>HALL OF FAME</h1>
           <div className="total-ranking">
             {top2Rank}
             {top1Rank}

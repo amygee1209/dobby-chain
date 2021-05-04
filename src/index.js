@@ -4,6 +4,10 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ChakraProvider } from "@chakra-ui/react";
+import "@fontsource/raleway/400.css";
+import "@fontsource/open-sans/700.css";
+import Fonts from "./fonts"
+import theme from "./theme"
 
 ReactDOM.render(
   <React.StrictMode>

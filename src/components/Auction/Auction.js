@@ -7,7 +7,7 @@ import {
   HStack,
   Tooltip
 } from "@chakra-ui/react";
-import { QuestionOutlineIcon } from '@chakra-ui/icons'
+import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import Timer from './Timer';
 import AuctionStat from './AuctionStat';
 
@@ -24,7 +24,7 @@ export default function Auction({address}) {
   const diff = +dueDateTime - +new Date();
 
   // auction end datetime
-  const auctionEndTime = new Date('05-06-2021 08:00:00')
+  const auctionEndTime = new Date('05-06-2021 01:10:00')
   const auctionDiff = +auctionEndTime - +new Date();
 
 

@@ -71,7 +71,7 @@ export default function CheckInItem({event, address, checkinEnable}) {
         </div>
         {!checkinEnable ? 
           <div>
-            <Button  className="btn" colorScheme="green" onClick={onOpen}>
+            <Button  className="btn details-btn" onClick={onOpen}>
               Details
             </Button>
 
@@ -97,7 +97,7 @@ export default function CheckInItem({event, address, checkinEnable}) {
           </div>
           :
           <div>
-            <Button className="btn" colorScheme="blue" onClick={onOpen}>
+            <Button className="btn checkin-btn" onClick={onOpen}>
               Check In
             </Button>
 

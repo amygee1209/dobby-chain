@@ -4,7 +4,6 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
@@ -12,12 +11,16 @@ import {
   useToast,
   InputGroup,
   InputLeftAddon,
-  Input, Stack,
+  Input, Tooltip,
   Alert, AlertIcon, AlertTitle, AlertDescription,
   Flex, Box,
-  CloseButton
-} from "@chakra-ui/react"
-import { CheckIcon } from '@chakra-ui/icons'
+  CloseButton,
+  HStack
+} from "@chakra-ui/react";
+import { 
+  QuestionOutlineIcon,
+  CheckIcon
+} from '@chakra-ui/icons';
 import './AuctionItem.css';
 import axios from 'axios';
 
@@ -263,34 +266,57 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
       <Modal closeOnOverlayClick={false} size="xl" isOpen={isOpen} onClose={handleClose}>
         <ModalOverlay />
         <ModalContent className="auction-item-box">
-          <ModalHeader>{item.name}</ModalHeader>
+          <ModalHeader></ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             {auctionDiff <= 0?
               <div>
                 <img src={item.img} className="contractAddr-img" alt="item img"/>
                 <h1>Congratulations!!!!!</h1>
-                <h1>{highestBidder}</h1>
+                <h1>Winner: {highestBidder}</h1>
+                <h1>Winning Bid: {highestBid}</h1>
               </div>
               :
-              <Stack spacing="2vh">
+              <>
+              <Flex flexDirection="row">
                 <img src={item.img} className="contractAddr-img" alt="item img"/>
                 {/* <h2>Auction Address:</h2>
                 <h2>{item.contractAddr}</h2> */}
-                <h2>Auction ID: {item.aid}</h2>
-                <h2>Auction Price: ${item.price}</h2>
-                {auctionDiff <= 1800000?
-                  <>
-                    <h2>Highest Bid: 궁금하쥬?</h2>
-                    <h2>Highest Bidder: 궁금하쥬?</h2>
-                  </>
-                  :
-                  <>
-                    <h2>Highest Bid: {highestBid} DOBBY</h2>
-                    <h2>Highest Bidder: {highestBidder} </h2>
-                  </>
-                }
-                <h2>My Bid: {myBid} DOBBY</h2>
+                <div className="bidding-content">
+                  <HStack>
+                    <h3>{item.name}</h3>
+                    <Tooltip hasArrow label={item.aid} bg="gray.300" color="black">
+                      <QuestionOutlineIcon/>
+                    </Tooltip>
+                  </HStack>
+                  
+                  {auctionDiff <= 1800000?
+                    <>
+                      <h4>Highest Bid: 궁금하쥬?</h4>
+                      <h4>Highest Bidder: 궁금하쥬?</h4>
+                    </>
+                    :
+                    <>
+                      <h1>{!highestBid? 0 : highestBid} DOBBY</h1>
+                      <h5>by {highestBidder}</h5>
+                    </>
+                  }
+                  <br/><br/><hr/>
+                  {/* <h4>${item.price}</h4> */}
+                  <h5 style={{
+                    color:"grey", 
+                    fontSize:"1.5vh",
+                    marginTop:"2vh"
+                    }}>
+                    My Bid
+                  </h5>
+                  <h4>
+                    {myBid} DOBBY
+                  </h4>
+                </div>
+                
+              </Flex>
+              <Flex flexDirection="row" className="bidding-box" >
                   <InputGroup>
                     <InputLeftAddon children="DOBBY"/>
                     <Input 
@@ -299,52 +325,51 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
                       placeholder="Your bid"
                       variant="filled"
                       onChange={handleChange}
-                      style={{fontSize: "3vh"}}
+                      style={{fontSize: "2vh"}}
                     />
                   </InputGroup>
                   {bidStatus?
-                    <Stack spacing={3}>
-                      <Button
-                        isLoading
-                        loadingText="Bidding in process"
-                        colorScheme="red"
-                        variant="outline"
-                      ></Button>
-                      <Alert status="error">
-                        <AlertIcon />
-                        <Box flex="1">
-                          <AlertTitle>Warning!</AlertTitle>
-                          <AlertDescription display="block">
-                            You will see TWO metamask popups
-                            <br/>
-                            Please follow the instructions on metamask
-                            <br/>
-                            MUST WAIT UNTIL PAGE AUTOMATICALLY RELOADS!
-                          </AlertDescription>
-                        </Box>
-                        <CloseButton position="absolute" right="8px" top="8px" />
-                      </Alert>
-                    </Stack>
+                    <Button
+                      isLoading
+                      colorScheme="red"
+                      variant="outline"
+                      style={{marginLeft: "1vw", width: "30%"}}
+                    ></Button>
                     :
-                    <Flex justifyContent="center">
-                      <Button 
-                        onClick={handleSubmit}
-                        rightIcon={<CheckIcon />} 
-                        colorScheme="blue" 
-                        variant="outline"
-                        className="btn"
-                        isDisabled={bidDisable}
-                      >
-                        Bid
-                      </Button>
-                    </Flex>
+                    <Button 
+                      onClick={handleSubmit}
+                      rightIcon={<CheckIcon />} 
+                      colorScheme="blue" 
+                      variant="outline"
+                      isDisabled={bidDisable}
+                      style={{marginLeft: "1vw", width: "30%"}}
+                    >
+                      Bid
+                    </Button>
                   }
-              </Stack>
+                  
+                  </Flex>
+                  {bidStatus?
+                    <Alert status="warning" style={{marginTop: "2.5vh"}}>
+                      <AlertIcon />
+                      <Box flex="1">
+                        <AlertTitle>Warning!</AlertTitle>
+                        <AlertDescription display="block">
+                          You will see TWO metamask popups
+                          <br/>
+                          Please follow the instructions on metamask
+                          <br/>
+                          MUST WAIT UNTIL PAGE AUTOMATICALLY RELOADS!
+                        </AlertDescription>
+                      </Box>
+                      <CloseButton position="absolute" right="8px" top="8px" />
+                    </Alert>
+                    :
+                    null
+                  }
+                </>
             }
           </ModalBody>
-
-          <ModalFooter>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </div>

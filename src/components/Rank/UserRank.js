@@ -30,9 +30,9 @@ export default function MyRank({user, rankingSel}) {
   return(
     <>
       <div onClick={onOpen} className={`${designClass} ranking-display`}>
-        {rankingSel === 1 ?
+        {/* {rankingSel === 1 ?
           <img src={crown} className="crown-img" alt="crown"/> : null
-        }
+        } */}
         {user.img ?
           <img src={user.img} className="profile-img" alt="headshot"/>
           :
