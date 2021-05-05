@@ -190,6 +190,7 @@ export default function Officer({address}) {
         duration: 10000,
         isClosable: true,
       })
+      setDistDobbyStatus(false);
     });
     await airdrop.methods.distributeDobbyTokens(_addresses, _value).send({from:address})
     .on("transactionHash", hash => {
@@ -203,6 +204,7 @@ export default function Officer({address}) {
         duration: 10000,
         isClosable: true,
       })
+      setDistDobbyStatus(false);
     });
     //console.log(total_val)
     setEventId('')
@@ -249,6 +251,7 @@ export default function Officer({address}) {
         duration: 10000,
         isClosable: true,
       })
+      setDistEtherStatus(false);
     });
     setInputEther('');
     setDistEtherStatus(false);
@@ -315,6 +318,7 @@ export default function Officer({address}) {
         duration: 10000,
         isClosable: true,
       })
+      setCreateStatus(false);
     });
     await factory.methods.getAuctionAddr(name).call().then(auctionAddr => {
       let formData = new FormData();

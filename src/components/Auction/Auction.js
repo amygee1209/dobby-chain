@@ -24,7 +24,7 @@ export default function Auction({address}) {
   const diff = +dueDateTime - +new Date();
 
   // auction end datetime
-  const auctionEndTime = new Date('05-06-2021 01:10:00')
+  const auctionEndTime = new Date('05-06-2021 08:00:00')
   const auctionDiff = +auctionEndTime - +new Date();
 
 
@@ -118,10 +118,11 @@ export default function Auction({address}) {
             totalBid={totalBid} 
             totalBidMem={totalBidMem}
           />
+          <hr style={{marginBottom: "4vh"}}/>
           <div className="auction-notify">
           <HStack>
-            <p>Colored box</p>
-            <Tooltip hasArrow label="Colored boxes are items I bid" bg="gray.300" color="black">
+            <p>Colored line</p>
+            <Tooltip hasArrow label="Colored line indicates that you've bid" bg="gray.300" color="black">
               <QuestionOutlineIcon/>
             </Tooltip>
           </HStack>

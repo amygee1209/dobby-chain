@@ -259,29 +259,47 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
 
   return (
     <div onClick={onOpen} className={designClass}>
-
       <img src={item.img} className="auction-item-img" alt="item img"/>
       <h1>{item.name}</h1>
+      <h2>${item.price}</h2>
 
       <Modal closeOnOverlayClick={false} size="xl" isOpen={isOpen} onClose={handleClose}>
         <ModalOverlay />
         <ModalContent className="auction-item-box">
-          <ModalHeader></ModalHeader>
+          <ModalHeader>
+            {auctionDiff <= 0?
+              <h3 style={{
+                      textAlign: "center", 
+                      fontSize:"3vh"
+                      }}>
+                🎉Congratulations!🎉
+              </h3>
+              :
+              null
+            }
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             {auctionDiff <= 0?
-              <div>
+              <Flex flexDirection="row">
                 <img src={item.img} className="contractAddr-img" alt="item img"/>
-                <h1>Congratulations!!!!!</h1>
-                <h1>Winner: {highestBidder}</h1>
-                <h1>Winning Bid: {highestBid}</h1>
-              </div>
+                <div className="bidding-content">
+                  <h3>{item.name}</h3>
+                  <h1>{!highestBid? 0 : highestBid} DOBBY</h1>
+                  <Flex>
+                    <h5>by</h5>
+                    <h5 style={{
+                      color: "rgb(243, 114, 114)",
+                      marginLeft: "5px",
+                      fontWeight: "500"
+                      }}>{highestBidder}</h5>
+                  </Flex>
+                </div>
+              </Flex>
               :
               <>
               <Flex flexDirection="row">
                 <img src={item.img} className="contractAddr-img" alt="item img"/>
-                {/* <h2>Auction Address:</h2>
-                <h2>{item.contractAddr}</h2> */}
                 <div className="bidding-content">
                   <HStack>
                     <h3>{item.name}</h3>
@@ -289,12 +307,15 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
                       <QuestionOutlineIcon/>
                     </Tooltip>
                   </HStack>
-                  
                   {auctionDiff <= 1800000?
-                    <>
-                      <h4>Highest Bid: 궁금하쥬?</h4>
-                      <h4>Highest Bidder: 궁금하쥬?</h4>
-                    </>
+                    <div style={{
+                      color: "transparent",
+                      textShadow: "0 0 10px rgb(128,128,128)",
+                      userSelect: "none"
+                    }}>
+                      <h1>{!highestBid? 0 : highestBid} DOBBY</h1>
+                      <h5>by {highestBidder}</h5>
+                    </div>
                     :
                     <>
                       <h1>{!highestBid? 0 : highestBid} DOBBY</h1>
@@ -302,7 +323,6 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
                     </>
                   }
                   <br/><br/><hr/>
-                  {/* <h4>${item.price}</h4> */}
                   <h5 style={{
                     color:"grey", 
                     fontSize:"1.5vh",
@@ -310,7 +330,9 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
                     }}>
                     My Bid
                   </h5>
-                  <h4>
+                  <h4 style={{
+                    fontSize:"2vh"
+                    }}>
                     {myBid} DOBBY
                   </h4>
                 </div>

@@ -26,6 +26,14 @@ export default function MyRank({user, rankingSel}) {
     "rest-ranking" : `top3-ranking top${rankingSel}`
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+  let rankEmoji = null;
+  if (rankingSel === 1) {
+    rankEmoji = "🥇";
+  } else if (rankingSel === 2) {
+    rankEmoji = "🥈";
+  } else if (rankingSel === 3) {
+    rankEmoji = "🥉";
+  }
     
   return(
     <>
@@ -39,7 +47,7 @@ export default function MyRank({user, rankingSel}) {
           <img src={defaultImg} className="profile-img" alt="headshot"/>
         }
         <h5>Rank #{user.rank}</h5>
-        <p>{user.name}</p>
+        <p>{user.name} {rankEmoji}</p>
         <p>{user.num_points} points</p>
       </div>
 
