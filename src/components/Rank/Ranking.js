@@ -8,7 +8,6 @@ export default function Ranking({address}) {
   const [ranking, setRanking] = useState([]);
   const [loading, setLoading] = useState(false);
   const [myRank, setMyRank] = useState(0);
-  const [user, setUser] = useState(undefined);
   
   const fetchUsers = async () => {
     console.log("fetching all members...")
@@ -31,20 +30,6 @@ export default function Ranking({address}) {
       setRanking(ranking);
       setLoading(true);
     }
-    fetchUser();
-  }
-
-  const fetchUser = async () => {
-    console.log("fetching member...")
-    const res = await axios
-      .get(`https://dobchain-testing.herokuapp.com/member?address=${address}`)
-      .catch((err) => {
-        console.log("Error:", err);
-      })
-    if (res) {
-      console.log(res.data);
-      setUser(res.data.memberInfo)
-    }
   }
 
   useEffect(() => {
@@ -61,7 +46,7 @@ export default function Ranking({address}) {
     <UserRank user={person} rankingSel={3} key={person.uid} />
   )
   const restRank = ranking.slice(3).map(person => 
-    <UserRank user={person} rankingSel={0} key={person.uid} />
+    <UserRank user={person} rankingSel={0} selfVerify={person.rank === myRank} key={person.uid} />
   )
 
   return (

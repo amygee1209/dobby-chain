@@ -1,5 +1,4 @@
 import './UserRank.css';
-import crown from './../../img/crown.png';
 import defaultImg from './../../img/default.jpg';
 import {
   Modal,
@@ -11,19 +10,17 @@ import {
   ModalCloseButton,
   useDisclosure,
   Input,
-  Stack, HStack,
-  Flex
+  Stack, HStack
 } from "@chakra-ui/react";
 import { 
   EmailIcon,
   ChatIcon,
-  DeleteIcon,
   InfoOutlineIcon
 } from '@chakra-ui/icons';
 
-export default function MyRank({user, rankingSel}) {
+export default function MyRank({user, rankingSel, selfVerify}) {
   const designClass = rankingSel === 0 ?
-    "rest-ranking" : `top3-ranking top${rankingSel}`
+    `rest-ranking ${selfVerify}` : `top3-ranking top${rankingSel}`
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   let rankEmoji = null;
@@ -38,9 +35,6 @@ export default function MyRank({user, rankingSel}) {
   return(
     <>
       <div onClick={onOpen} className={`${designClass} ranking-display`}>
-        {/* {rankingSel === 1 ?
-          <img src={crown} className="crown-img" alt="crown"/> : null
-        } */}
         {user.img ?
           <img src={user.img} className="profile-img" alt="headshot"/>
           :

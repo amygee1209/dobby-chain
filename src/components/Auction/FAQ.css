@@ -1,0 +1,14 @@
+#faq-section {
+  margin: 5vh 0;
+}
+#faq-section h1 {
+  font-weight: 500;
+  font-size: 3vh;
+}
+#faq-section p {
+  margin-top: 5px;
+}
+#faq-section p em {
+  font-weight: 700;
+  text-decoration: underline;
+}

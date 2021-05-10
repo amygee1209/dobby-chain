@@ -51,13 +51,18 @@
 .rest-ranking {
   border-radius: 20px;
   width: 18%;
-  border: 2px #69b0d1 solid;
   margin: 2vh 1%;
   padding: 5px 10px 10px;
   margin-top: 5vh;
   transition: all .2s ease-in-out;
   line-height: 2;
   min-width: 120px;
+}
+.rest-ranking.false {
+  border: 2px #69b0d1 solid;
+}
+.rest-ranking.true {
+  border: 4px #f7542b solid;
 }
 .rest-ranking:hover{
   transform: scale(1.1);

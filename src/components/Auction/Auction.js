@@ -5,11 +5,18 @@ import axios from 'axios';
 import { 
   CircularProgress, 
   HStack,
-  Tooltip
+  Tooltip,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+  Box
 } from "@chakra-ui/react";
 import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import Timer from './Timer';
 import AuctionStat from './AuctionStat';
+import FAQ from './FAQ';
 
 export default function Auction({address}) {
   const [auctions, setAuctions] = useState([]);
@@ -138,6 +145,31 @@ export default function Auction({address}) {
           </div>
         </div>
       }
+      <Accordion
+        allowMultiple
+        style={{marginTop: "200px"}}
+      >
+        <AccordionItem>
+          <h2>
+            <AccordionButton>
+              <Box 
+                flex="1" 
+                textAlign="left"
+                fontSize="3vh"
+                fontWeight="500"
+                padding="1vh"
+                color="#FFA116"
+              >
+                Frequently Asked Questions
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+            <FAQ/>
+          </AccordionPanel>
+        </AccordionItem>
+      </Accordion>
     </>
   )
 }
