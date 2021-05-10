@@ -107,7 +107,7 @@ export default function Navbar({onboard, onboardState, themeBtn}) {
               <Link to="/auction" onClick={closeMenu} className='nav-links'>Auction</Link>
             </li>
             <li className='nav-item'>
-              <Link to="/officer" onClick={closeMenu} className='nav-links'>Officer</Link>
+              <Link to="/officer" onClick={closeMenu} className='nav-links'>Admin</Link>
             </li>
             <li className='nav-item'>
               <Link to="/profile" onClick={closeMenu} className='nav-links'>Profile</Link>
