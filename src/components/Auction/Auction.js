@@ -27,12 +27,12 @@ export default function Auction({address}) {
   const [allBid, setAllBid] = useState('');
 
   // auction start datetime
-  const due = '05-05-2021 08:00:00';
+  const due = '05-10-2021 15:35:00';
   const dueDateTime = new Date(due);
   const diff = +dueDateTime - +new Date();
 
   // auction end datetime
-  const auctionEndTime = new Date('05-06-2021 08:00:00')
+  const auctionEndTime = new Date('05-11-2021 15:35:00')
   const auctionDiff = +auctionEndTime - +new Date();
 
 
