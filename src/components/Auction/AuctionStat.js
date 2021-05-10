@@ -9,7 +9,7 @@ import {
   Flex
 } from "@chakra-ui/react";
 
-export default function AuctionStat({auctionEndTime, totalBid, totalBidMem}) {
+export default function AuctionStat({auctionEndTime, allBid, memBid, totalBidMem}) {
   const [timeLeft, setTimeLeft] = useState(getTimeLeft());
   
   function getTimeLeft() {
@@ -94,12 +94,12 @@ export default function AuctionStat({auctionEndTime, totalBid, totalBidMem}) {
               flexDirection="row" 
               alignItems="baseline"
             >
-              <StatNumber>{totalBid}</StatNumber>
-              <p>/1200</p>
+              <StatNumber>{memBid}</StatNumber>
+              <p>/{allBid}</p>
             </Flex>
             <StatHelpText>
               <StatArrow type="increase" />
-              {parseFloat(totalBid/1200 * 100).toFixed(2)}%
+              {parseFloat(memBid/allBid * 100).toFixed(2)}%
             </StatHelpText>
           </Stat>
 

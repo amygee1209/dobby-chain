@@ -284,7 +284,12 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
               <Flex flexDirection="row">
                 <img src={item.img} className="contractAddr-img" alt="item img"/>
                 <div className="bidding-content">
-                  <h3>{item.name}</h3>
+                  <HStack>
+                    <h3>{item.name}</h3>
+                    <Tooltip hasArrow label={item.aid} bg="gray.300" color="black">
+                      <QuestionOutlineIcon/>
+                    </Tooltip>
+                  </HStack>
                   <h1>{!highestBid? 0 : highestBid} DOBBY</h1>
                   <Flex>
                     <h5>by</h5>

@@ -11,9 +11,12 @@ import {
   ModalCloseButton,
   useDisclosure,
   Input, Stack, Badge, HStack,
-  useToast
+  useToast, Tooltip
 } from "@chakra-ui/react";
-import { SmallAddIcon } from '@chakra-ui/icons';
+import { 
+  SmallAddIcon,
+  QuestionOutlineIcon
+} from '@chakra-ui/icons';
 import axios from 'axios';
 
 export default function CheckInItem({event, address, checkinEnable}) {
@@ -78,15 +81,18 @@ export default function CheckInItem({event, address, checkinEnable}) {
             <Modal isOpen={isOpen} onClose={handleClose}>
               <ModalOverlay />
               <ModalContent>
-                <ModalHeader>{event.eventName}</ModalHeader>
+                <ModalHeader>
+                  <HStack>
+                    <h3>{event.eventName}</h3>
+                    <Tooltip hasArrow label={event.eid} bg="gray.300" color="black">
+                      <QuestionOutlineIcon/>
+                    </Tooltip>
+                  </HStack>
+                </ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
                   <Stack spacing="10px">
-                    <p>Event ID: {event.eid}</p>
-                    <div>
-                      <p>Event Details:</p>
-                      <p style={{marginLeft: '15px'}}>{event.eventDetails}</p>
-                    </div>
+                    <p style={{margin: '2vh'}}>{event.eventDetails}</p>
                   </Stack>
                 </ModalBody>
 
@@ -104,15 +110,18 @@ export default function CheckInItem({event, address, checkinEnable}) {
             <Modal isOpen={isOpen} onClose={handleClose}>
               <ModalOverlay />
               <ModalContent>
-                <ModalHeader>{event.eventName}</ModalHeader>
+                <ModalHeader>
+                  <HStack>
+                    <h3>{event.eventName}</h3>
+                    <Tooltip hasArrow label={event.eid} bg="gray.300" color="black">
+                      <QuestionOutlineIcon/>
+                    </Tooltip>
+                  </HStack>
+                </ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
                   <Stack spacing="10px">
-                    <p>Event ID: {event.eid}</p>
-                    <div>
-                      <p>Event Details:</p>
-                      <p style={{marginLeft: '15px'}}>{event.eventDetails}</p>
-                    </div>
+                    <p style={{margin: '2vh 0'}}>{event.eventDetails}</p>
                     <div>
                       <p>Put secret key</p>
                       <Input type="text"

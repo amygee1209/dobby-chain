@@ -22,8 +22,9 @@ export default function Auction({address}) {
   const [auctions, setAuctions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [myAuctionBidList, setMyAuctionBidList] = useState(false);
-  const [totalBid, setTotalBid] = useState('');
+  const [memBid, setMemBid] = useState('');
   const [totalBidMem, setTotalBidMem] = useState('');
+  const [allBid, setAllBid] = useState('');
 
   // auction start datetime
   const due = '05-05-2021 08:00:00';
@@ -61,7 +62,7 @@ export default function Auction({address}) {
         console.log("Error:", err)
       })
     if(res) {
-      console.log(res.data)
+      //console.log(res.data)
       setMyAuctionBidList(res.data);
       setLoading(false);
     }
@@ -71,17 +72,31 @@ export default function Auction({address}) {
     fetchAllAuctions();
   }, [address, loading])
 
-  //fetch total bids
-  const fetchTotalBids = async () => {
-    console.log("fetching total bids...")
+  //fetch all bids
+  const fetchAllBid = async () => {
+    console.log("fetching all bids...")
+    const res = await axios
+      .get(`https://dobchain-testing.herokuapp.com/allbids`)
+      .catch(err => {
+        console.log("Error:", err)
+      })
+    if(res) {
+      console.log(res.data)
+      setAllBid(res.data);
+    }
+  }
+
+  //fetch all members bids
+  const fetchMemBids = async () => {
+    console.log("fetching All Members bids...")
     const res = await axios
       .get(`https://dobchain-testing.herokuapp.com/totalauctionbids`)
       .catch(err => {
         console.log("Error:", err)
       })
     if(res) {
-      console.log(res.data)
-      setTotalBid(res.data);
+      //console.log(res.data)
+      setMemBid(res.data);
     }
   }
 
@@ -94,13 +109,14 @@ export default function Auction({address}) {
         console.log("Error:", err)
       })
     if(res) {
-      console.log(res.data)
+      //console.log(res.data)
       setTotalBidMem(res.data);
     }
   }
 
   useEffect(() => {
-    fetchTotalBids();
+    fetchAllBid();
+    fetchMemBids();
     fetchTotalBidMem();
   }, [auctions, myAuctionBidList])
 
@@ -121,8 +137,9 @@ export default function Auction({address}) {
         :
         <div id="auction">
           <AuctionStat 
-            auctionEndTime={auctionEndTime} 
-            totalBid={totalBid} 
+            auctionEndTime={auctionEndTime}
+            allBid={allBid}
+            memBid={memBid} 
             totalBidMem={totalBidMem}
           />
           <hr style={{marginBottom: "4vh"}}/>

@@ -40,8 +40,8 @@
 }
 .contractAddr-img {
   display: inline-block;
-  width: 50%;
-  height: 50%;
+  width: 33vh;
+  height: 33vh;
   object-fit: cover;
 }
 .auction-item-box {
