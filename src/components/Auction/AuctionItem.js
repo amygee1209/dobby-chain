@@ -263,9 +263,9 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
       <h1>{item.name}</h1>
       <h2>${item.price}</h2>
 
-      <Modal closeOnOverlayClick={false} size="xl" isOpen={isOpen} onClose={handleClose}>
+      <Modal closeOnOverlayClick={false} isOpen={isOpen} onClose={handleClose}>
         <ModalOverlay />
-        <ModalContent className="auction-item-box">
+        <ModalContent maxW="36.5rem" className="auction-item-box">
           <ModalHeader>
             {auctionDiff <= 0?
               <h3 style={{
