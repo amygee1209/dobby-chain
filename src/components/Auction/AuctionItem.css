@@ -40,14 +40,15 @@
 }
 .contractAddr-img {
   display: inline-block;
-  width: 50%;
+  width: 33vh;
+  height: 33vh;
   object-fit: cover;
 }
 .auction-item-box {
   padding: 2vh 3vh 2vh;
 }
 .auction-item-box .bidding-content {
-  width: 40%;
+  width: 40vw;
   margin-left: 4vh;
   padding: 3vh 2vh 0;
   border: 0.5px rgb(207, 207, 207) solid;
