@@ -73,13 +73,14 @@ export default function Profile({address}) {
         isClosable: true,
       })
       handleReset();
+      setEdit(false);
+      window.location.reload();
     }
   }
 
   function handleSubmit(e) {
     e.preventDefault();
     updateUserInfo();
-    setEdit(false);
   }
 
   function handleChange(e) {
@@ -92,8 +93,8 @@ export default function Profile({address}) {
   }
   
   function handleReset() {
-    setName('')
-    setEmail('')
+    setName('');
+    setEmail('');
   }
 
   return (
