@@ -94,8 +94,7 @@ export default function Content(props) {
     let prevTheme = window.localStorage.getItem('theme');
     if (prevTheme) {
       props.setTheme(prevTheme);
-    }
-    
+    }    
   }, []);
 
   useEffect(() => {
