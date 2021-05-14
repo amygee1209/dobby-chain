@@ -25,7 +25,7 @@ export default function Main() {
         className="main-video"
         width="70%" 
         height="500" 
-        src="https://www.youtube.com/embed/tJ5pvZYrFEc?autoplay=1&mute=1" 
+        src="https://www.youtube.com/embed/Vd8lY6Ph4bs?autoplay=1&mute=1" 
         title="YouTube video player" 
         frameBorder="0" 
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 

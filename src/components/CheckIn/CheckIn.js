@@ -54,7 +54,7 @@ export default function CheckIn({address}) {
             <div>
               {
                 upcomingEvents.length === 0 ?
-                <p>You have no upcoming events!</p>
+                <p>There are no upcoming events!</p>
                 : upcomingE
               }
             </div>
@@ -65,7 +65,7 @@ export default function CheckIn({address}) {
             <div>
               {
                 completedEvents.length === 0 ?
-                <p>You have no completed events!</p>
+                <p>There are no completed events!</p>
                 : completedE
               }
             </div>
@@ -76,7 +76,7 @@ export default function CheckIn({address}) {
             <div>
               {
                 missedEvents.length === 0 ?
-                <p>You have no missed events!</p>
+                <p>There are no missed events!</p>
                 : missedE
               }
             </div>

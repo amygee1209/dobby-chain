@@ -70,7 +70,7 @@ export default function CheckInItem({event, address, checkinEnable}) {
               <SmallAddIcon/>{event.pointAmount} points
             </Badge>
           </HStack>
-          <p>Created At: {event.dueDate} + {event.timeLimit} minutes</p>
+          <p>{event.dueDate} + {event.timeLimit} minutes</p>
         </div>
         {!checkinEnable ? 
           <div>

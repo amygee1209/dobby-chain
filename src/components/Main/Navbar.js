@@ -48,11 +48,11 @@ export default function Navbar({onboard, onboardState, themeBtn}) {
         <PopoverArrow />
         <PopoverCloseButton />
         <PopoverHeader>
-          <p>Welcome to KSEA!</p>
+          <p>Welcome to Dobby Chain!</p>
         </PopoverHeader>
         <PopoverBody>
           <p>Need Help?</p>
-          <a href="https://metamask.io/" className="tutorial-link"  target="_blank" rel="noopener noreferrer">
+          <a href="https://www.youtube.com/watch?v=EPVxE7zXx20" className="tutorial-link"  target="_blank" rel="noopener noreferrer">
             Try this tutorial!
           </a>
         </PopoverBody>

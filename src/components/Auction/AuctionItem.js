@@ -239,15 +239,16 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
       //console.log(res.data);
       if (res.data.status === "success") {
         setBidDisable(false)
-      } else {
-        toastIdRef.current = toast({
-          title: "Error",
-          description: res.data.status,
-          status: "error",
-          duration: 100000,
-          isClosable: true,
-        })
-      }
+      } 
+      // else {
+      //   toastIdRef.current = toast({
+      //     title: "Error",
+      //     description: res.data.status,
+      //     status: "error",
+      //     duration: 100000,
+      //     isClosable: true,
+      //   })
+      // }
     }
   }
 

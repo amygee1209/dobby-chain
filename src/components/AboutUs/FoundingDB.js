@@ -16,7 +16,7 @@ const FoundingDB = [
   {
     english: "Jisu Han",
     korean: "한지수",
-    img: defaultImg,
+    img: "https://docs.google.com/uc?export=download&id=1hV8M2zyW8EVzwkWiRirjtuUBfW1qdiPE",
     profile: "https://www.linkedin.com/in/hanjisu/"
   },
   {

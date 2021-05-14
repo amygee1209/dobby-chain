@@ -110,12 +110,12 @@ export default function AuctionStat({auctionEndTime, allBid, memBid, totalBidMem
               alignItems="baseline" 
             >
               <StatNumber>{totalBidMem}</StatNumber>
-              <p>/48</p>
+              <p>/37</p>
             </Flex>
             
             <StatHelpText>
               <StatArrow type="increase" />
-              {parseFloat(totalBidMem/48 * 100).toFixed(2)}%
+              {parseFloat(totalBidMem/37 * 100).toFixed(2)}%
             </StatHelpText>
           </Stat>
         </Flex>

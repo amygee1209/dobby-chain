@@ -33,6 +33,7 @@ export default function Auction({address}) {
 
   // auction end datetime
   const auctionEndTime = new Date(Date.UTC(2021,4,15,4,0,0,0)) 
+
   const auctionDiff = +auctionEndTime - +new Date();
 
 

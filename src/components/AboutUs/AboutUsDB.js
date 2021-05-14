@@ -24,7 +24,7 @@ const AboutUsDB = [
   {
     english: "Jisu Han",
     korean: "한지수",
-    img: defaultImg,
+    img: "https://docs.google.com/uc?export=download&id=1hV8M2zyW8EVzwkWiRirjtuUBfW1qdiPE",
     profile: "https://www.linkedin.com/in/hanjisu/",
     position1: "Project Lead",
     boxColor1: "#56CBF9",
@@ -42,7 +42,7 @@ const AboutUsDB = [
   {
     english: "Amy Kwon",
     korean: "권예은",
-    img: defaultImg,
+    img: "https://docs.google.com/uc?export=download&id=1aRRGoiiOzRWV5hLoZ9GRkidNtXPwBpg7",
     profile: "https://www.linkedin.com/in/amy-kwon-928872142/",
     position1: "Frontend/Backend Engineer",
     boxColor1: "#C3DBC5"

@@ -21,9 +21,7 @@ export default function AboutUs() {
     <Stack id="about-us" spacing="50px">
       <h1>Dobby Story</h1>
       <div>
-        <p
-          style={{textIndent: "40px"}}
-        >
+        <p>
           DobbyChain is a blockchain based P2P token trading platform. 
           Founded in Fall 2020, DobbyChain has become the ultimate platform for 
           KSEA members to manage their club activities and most importantly, 
@@ -33,9 +31,7 @@ export default function AboutUs() {
           ranging from computer science & EECS to economics and business. 
         </p>
         <br/>
-        <p
-          style={{textIndent: "40px"}}
-        >
+        <p>
           We launched the DobbyChain Platform in Spring 2021, 
           and our pool of opportunities are growing across fields as 
           we plan to constructively and fearlessly expand our scope of business. 
