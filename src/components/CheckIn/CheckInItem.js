@@ -11,7 +11,7 @@ import {
   ModalCloseButton,
   useDisclosure,
   Input, Stack, Badge, HStack,
-  useToast, Tooltip
+  useToast, Tooltip, Flex, VStack
 } from "@chakra-ui/react";
 import { 
   SmallAddIcon,
@@ -26,6 +26,11 @@ export default function CheckInItem({event, address, checkinEnable}) {
   //design
   const toast = useToast();
   const toastIdRef = React.useRef();
+
+  var oldDate = new Date (event.dueDate);
+  var newDate = new Date (event.dueDate);
+  newDate.setMinutes(oldDate.getMinutes() + event.timeLimit);
+  //console.log(newDate);
 
   function handleChange(e) {
     setInputKey(e.target.value);
@@ -70,7 +75,8 @@ export default function CheckInItem({event, address, checkinEnable}) {
               <SmallAddIcon/>{event.pointAmount} points
             </Badge>
           </HStack>
-          <p>{event.dueDate} + {event.timeLimit} minutes</p>
+          <p>Due {newDate.toLocaleString('en-US')}</p>
+          
         </div>
         {!checkinEnable ? 
           <div>

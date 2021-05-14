@@ -44,11 +44,11 @@ export default function Navbar({onboard, onboardState, themeBtn}) {
           {name}
         </Button>
       </PopoverTrigger>
-      <PopoverContent width="250px">
+      <PopoverContent width="300px">
         <PopoverArrow />
         <PopoverCloseButton />
         <PopoverHeader>
-          <p>Welcome to Dobby Chain!</p>
+          <p>Welcome back {name}</p>
         </PopoverHeader>
         <PopoverBody>
           <p>Need Help?</p>

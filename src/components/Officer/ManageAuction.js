@@ -125,14 +125,14 @@ export default function ManageAuction(
         name="auctionName" 
         value={auctionName}
         onChange={handleAuctionChange} 
-        placeholder="auction item name"
+        placeholder="Auction Item Name"
       />
       <Stack spacing={2}>
         <Input
           name="auctionImg"
           value={auctionImg}
           onChange={handleAuctionChange} 
-          placeholder="auction item img link"
+          placeholder="Auction Item Img Link"
         />
       </Stack>
       <InputGroup>
@@ -142,7 +142,7 @@ export default function ManageAuction(
           type="number"
           value={auctionPrice}
           onChange={handleAuctionChange} 
-          placeholder="auction item price"
+          placeholder="Auction Item Price"
         />
       </InputGroup>
 
@@ -179,7 +179,7 @@ export default function ManageAuction(
         name="deleteAuctionId"
         value={deleteAuctionId}
         onChange={handleChange} 
-        placeholder="auction id"
+        placeholder="Auction Id"
       />
       <FormControl display="flex" alignItems="center">
         <FormLabel htmlFor="delete-alerts" mb="3">

@@ -372,7 +372,7 @@ export default function Officer({address}) {
             <h4>Register</h4>
             <Input 
               onChange={handleBoardChange} 
-              placeholder="officer metamask address"
+              placeholder="Officer Metamask Address"
             />
             <Button onClick={handleRegister} isDisabled={!isBoard} colorScheme="green">
               Register Officer
@@ -381,7 +381,7 @@ export default function Officer({address}) {
             <h4>Deregister</h4>
             <Input 
               onChange={handleBoardChange} 
-              placeholder="officer metamask address"
+              placeholder="Officer Metamask Address"
             />
             <Button onClick={handleDeregister} isDisabled={!isBoard} colorScheme="red">
               Deregister Officer
@@ -396,7 +396,7 @@ export default function Officer({address}) {
                 type="number"
                 value={eventId}
                 onChange={handleDistributeChange} 
-                placeholder="event Id"
+                placeholder="Event Id"
               />
               <Button onClick={handleViewCheckedinMembers} isDisabled={!isBoard} colorScheme="green">
                 View Event Details
@@ -412,7 +412,7 @@ export default function Officer({address}) {
                 type="number"
                 value={inputToken}
                 onChange={handleDistributeChange} 
-                placeholder="token amount"
+                placeholder="Token Amount"
               />
               {distDobbyStatus?
                 <Stack spacing={3}>
@@ -456,7 +456,7 @@ export default function Officer({address}) {
               type="number"
               value={inputEther}
               onChange={handleDistributeChange} 
-              placeholder="Ether amount"
+              placeholder="Ether Amount"
             />
             {distEtherStatus?
               <Stack spacing={3}>

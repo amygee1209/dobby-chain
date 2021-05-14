@@ -23,8 +23,7 @@ export default function Main() {
       <hr/>
       <iframe
         className="main-video"
-        width="70%" 
-        height="500" 
+        width="80%" height="600"
         src="https://www.youtube.com/embed/Vd8lY6Ph4bs?autoplay=1&mute=1" 
         title="YouTube video player" 
         frameBorder="0" 

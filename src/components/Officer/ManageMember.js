@@ -94,31 +94,31 @@ export default function ManageMember({isBoard}) {
         name="name"
         value={name}
         onChange={handleChange} 
-        placeholder="name"
+        placeholder="Name"
       />
       <Input
         name="email"
         value={email}
         onChange={handleChange} 
-        placeholder="email address"
+        placeholder="Email Address"
       />
       <Input
         name="img"
         value={img}
         onChange={handleChange} 
-        placeholder="img link"
+        placeholder="Img Link"
       />
       <Input
         name="numPoints"
         value={numPoints}
         onChange={handleChange} 
-        placeholder="current number of points"
+        placeholder="Current Number of Points"
       />
       <Input
         name="address"
         value={address}
         onChange={handleChange} 
-        placeholder="metamask address"
+        placeholder="Metamask Address"
       />
       <Button onClick={handleAddMember} isDisabled={!isBoard} colorScheme="green">
         Add Member
@@ -128,7 +128,7 @@ export default function ManageMember({isBoard}) {
         name="deleteMemAddr"
         value={deleteMemAddr}
         onChange={handleChange} 
-        placeholder="metamask address"
+        placeholder="Metamask Address"
       />
       <Button onClick={handleDeleteMember} isDisabled={!isBoard} colorScheme="red">
         Delete Member

@@ -126,8 +126,8 @@ export default function Profile({address}) {
                   onChange={handleChange}
                 />
                 <ButtonGroup justifyContent="center" size="sm">
-                  <IconButton icon={<CheckIcon color="black"/>} onClick={handleSubmit} />
                   <IconButton icon={<CloseIcon color="black"/>} onClick={() => {setEdit(false); handleReset();}} />
+                  <IconButton icon={<CheckIcon color="black"/>} onClick={handleSubmit} />
                 </ButtonGroup>
               </Stack>
               :

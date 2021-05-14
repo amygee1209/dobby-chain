@@ -166,13 +166,13 @@ export default function ManageCheckin({isBoard}) {
         value={name}
         onChange={handleChange} 
         name="name" 
-        placeholder="event name"
+        placeholder="Event Name"
       />
       <Input
         value={password}
         onChange={handleChange} 
         name="password" 
-        placeholder="event password"
+        placeholder="Event Password"
       />
       <InputGroup>
         <Input
@@ -180,7 +180,7 @@ export default function ManageCheckin({isBoard}) {
           value={eventPoint}
           onChange={handleChange} 
           name="eventPoint"
-          placeholder="event points"
+          placeholder="Event Points"
         />
         <InputRightAddon children="points"  color="black" />
       </InputGroup>
@@ -188,7 +188,7 @@ export default function ManageCheckin({isBoard}) {
         name="detail"
         value={detail}
         onChange={handleChange}
-        placeholder="event details"
+        placeholder="Event Details"
       />
       <InputGroup>
         <Input
@@ -196,7 +196,7 @@ export default function ManageCheckin({isBoard}) {
           value={timelimit}
           onChange={handleChange} 
           name="timelimit" 
-          placeholder="event time limit"
+          placeholder="Event Time Limit"
         />
         <InputRightAddon children="min"  color="black" />
       </InputGroup>
@@ -213,7 +213,7 @@ export default function ManageCheckin({isBoard}) {
         name="deleteEventId"
         value={deleteEventId}
         onChange={handleChange} 
-        placeholder="event id"
+        placeholder="Event Id"
       />
       <FormControl display="flex" alignItems="center">
         <FormLabel htmlFor="email-alerts" mb="3">
