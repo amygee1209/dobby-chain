@@ -23,6 +23,7 @@ import {
 } from '@chakra-ui/icons';
 import './AuctionItem.css';
 import axios from 'axios';
+import defaultImg from './../../img/default.jpg';
 
 import web3 from "../ethereum/Web3";
 import KSEA_Auction from "../../abis/KSEAuction.json";
@@ -38,6 +39,7 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
   const [inputBid, setInputBid] = useState('');
   const [highestBid, setHighestBid] = useState(0);
   const [highestBidder, setHighestBidder] = useState('');
+  const [highestBidderPic, setHighestBidderPic] = useState('');
   const [myBid, setMyBid] = useState('');
   const [bidStatus, setBidStatus] = useState(false);
   const [bidDisable, setBidDisable] = useState(true);
@@ -70,6 +72,12 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
         console.log(res.data)
         setHighestBid(res.data.highestBid)
         setHighestBidder(res.data.highestBidder)
+        if (res.data.highestBidderPic === '') {
+          setHighestBidderPic(defaultImg)
+        } else {
+          setHighestBidderPic(res.data.highestBidderPic)
+        }
+        
       })
       .catch(err => {
         console.log("Error:", err)
@@ -325,7 +333,18 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
                     :
                     <>
                       <h1>{!highestBid? 0 : highestBid} DOBBY</h1>
-                      <h5>by {highestBidder}</h5>
+                      <Flex>
+                        <h5>by {highestBidder}</h5>
+                        <img 
+                          src={highestBidderPic}
+                          style={{
+                            marginLeft: "10px",
+                            height: "25px",
+                            borderRadius: "5px"
+                          }}
+                          alt="highest bidder pic"
+                        />
+                      </Flex>
                     </>
                   }
                   <br/><br/><hr/>
