@@ -297,6 +297,17 @@ export default function AuctionItem({address, item, auctionDiff, exist}) {
                       marginLeft: "5px",
                       fontWeight: "500"
                       }}>{highestBidder}</h5>
+                    <img 
+                      src={highestBidderPic}
+                      style={{
+                        marginLeft: "10px",
+                        width: "25px",
+                        height: "25px",
+                        objectFit: "cover",
+                        borderRadius: "5px"
+                      }}
+                      alt="highest bidder pic"
+                    />
                   </Flex>
                 </div>
               </Flex>
